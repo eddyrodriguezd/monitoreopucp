@@ -27,7 +27,7 @@
         android:layout_margin="20dp"
         android:background="#e4e4e4"
         android:padding="10dp"
-        android:text="Indicendia 1"
+        android:text="Incidencia 1"
         android:textAlignment="viewStart"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -42,7 +42,7 @@
         android:layout_margin="20dp"
         android:background="#e4e4e4"
         android:padding="10dp"
-        android:text="Indicendia 2"
+        android:text="Incidencia 2"
         android:textAlignment="viewStart"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -58,7 +58,7 @@
         android:layout_marginTop="24dp"
         android:background="#e4e4e4"
         android:padding="10dp"
-        android:text="Indicendia 3"
+        android:text="Incidencia 3"
         android:textAlignment="viewStart"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -98,4 +98,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="61dp"
+        android:layout_height="51dp"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/editText8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.126"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>
