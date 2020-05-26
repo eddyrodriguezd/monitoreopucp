@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidenciaTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidencia_TitleValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/Incidencia_TitleValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleInfraIncidenciaTitle"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleInfraIncidenciaTitle"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleInfraIncidenciaTitle" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidencia_StatusValue2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/Incidencia_AnnotationValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus3"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleInfraIncidenciaStatus3"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleInfraIncidenciaStatus3"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidenciaStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/Status"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewSingleInfraIncidenciaRegisterDate"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleInfraIncidenciaRegisterDate" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidenciaStatus4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/CheckDate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewSingleInfraIncidenciaStatus"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfrarIncidencia_RegisterDateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/Incidencia_DateValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleInfraIncidenciaRegisterDate"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleInfraIncidenciaRegisterDate"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleInfraIncidenciaRegisterDate"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidenciaRegisterDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/RegisterDate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewSingleInfraIncidenciaStatus2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus2" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidenciaStatus3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/Annotations"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewSingleInfraIncidenciaStatus4"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus4" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidencia_StatusValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:text="@string/Incidencia_StatusValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleInfraIncidenciaStatus"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleInfraIncidenciaStatus"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidencia_StatusValue5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/Incidencia_DateValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus4"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleInfraIncidenciaStatus4"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleInfraIncidenciaStatus4"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidencia_StatusValue4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/Incidencia_StudentValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus2"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleInfraIncidenciaStatus2"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleInfraIncidenciaStatus2" />
+
+    <TextView
+        android:id="@+id/textViewSingleInfraIncidenciaStatus2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/RegisteredBy"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewSingleInfraIncidenciaTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleInfraIncidenciaTitle" />
+
+    <ImageView
+        android:id="@+id/imageViewInfraIncidencia"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleInfraIncidenciaStatus3"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

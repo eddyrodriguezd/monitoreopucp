@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Monitoreo Incidencias PUCP</string>
+
+    <string name="UserIncidenciasHistory">Mis incidencias</string>
+    <string name="InfraIncidenciasHistory">Histórico de incidencias</string>
+
+    <string name="Incidencia_TitleValue">#Título de la incidencia#</string>
+    <string name="Incidencia_DateValue">##/##/####</string>
+    <string name="Incidencia_StatusValue">#Por atender#</string>
+    <string name="Incidencia_AnnotationValue">#Sí, 2#</string>
+    <string name="Incidencia_StudentValue">#Eddy Rodríguez#</string>
+
+    <string name="ButtonBack">Volver</string>
+    <string name="ButtonFilter">Filtrar</string>
+    <string name="Title">Título:</string>
+    <string name="RegisterDate">Fecha de registro:</string>
+    <string name="Status">Estado:</string>
+    <string name="Annotations">¿Anotaciones adicionales?</string>
+    <string name="RegisteredBy">Registrado por:</string>
+    <string name="CheckDate">Fecha de revisión:</string>
+
 </resources>
