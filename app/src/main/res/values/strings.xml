@@ -32,6 +32,8 @@
     <string name="KeyWords">Palabras clave</string>
     <string name="Atendido">Atendido</string>
     <string name="NoAtendido">Por atender</string>
+    <string name="nueva_anotacion_title">Nueva Anotacion</string>
+    <string name="title_activity_map_filter">Mapa</string>
 
 
 </resources>

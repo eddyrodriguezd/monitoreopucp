@@ -31,6 +31,9 @@
         <activity android:name=".InfraIncidenciasHistoryActivity" />
         <activity android:name=".UserIncidenciasHistoryActivity" />
         <activity android:name=".IncidenciasListActivity" />
+        <activity
+            android:name=".AgregarAnotacionActivity"
+            android:label="@string/nueva_anotacion_title" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

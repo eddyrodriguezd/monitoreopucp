@@ -22,7 +22,7 @@
         <ScrollView
             android:id="@+id/scrollNuevaAnotacion"
             android:layout_width="match_parent"
-            android:layout_height="440sp">
+            android:layout_height="260dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
