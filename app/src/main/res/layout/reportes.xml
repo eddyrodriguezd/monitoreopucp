@@ -104,7 +104,6 @@
         android:layout_width="61dp"
         android:layout_height="51dp"
         android:clickable="true"
-        app:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
