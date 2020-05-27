@@ -34,6 +34,9 @@
     <string name="NoAtendido">Por atender</string>
     <string name="nueva_anotacion_title">Nueva Anotacion</string>
     <string name="title_activity_map_filter">Mapa</string>
+    <string name="title_incidencias_cercanas">Incidenicias Cercanas</string>
+    <string name="title_incidencia_formulario">Formulario de Incidencia</string>
+    <string name="titel_incidencia_seleccionada">Incidencia Seleccionada</string>
 
 
 </resources>
