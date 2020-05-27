@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textViewTituloIncidenica_FormularioIncidencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -36,7 +36,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView7"
+                        android:id="@+id/textViewContenidoIncidencia_FormularioIncidencia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TextView"
@@ -50,6 +50,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/imageFotoIncidencia_FormularioIncidencia"
                     android:layout_width="250dp"
                     android:layout_height="200dp" />
 
@@ -59,13 +60,13 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/imageButton2"
+                        android:id="@+id/buttonTomarFoto_FormularioIncidencia"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         app:srcCompat="@drawable/ic_camera" />
 
                     <ImageButton
-                        android:id="@+id/imageButton4"
+                        android:id="@+id/buttonGaleria_FornularioIncidencia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_galeria" />
@@ -73,26 +74,27 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ingresar ubicación por el mapa"
-                android:textSize="18sp" />
-
             <CheckBox
                 android:id="@+id/checkBox3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:text="Utilizar ubicación actual"
                 android:textAlignment="viewStart"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/buttonIngresarMapa_FormularioIncidencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aceptar" />
+                android:text="Ingresar ubicación por el mapa"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/buttonAceptar_FormularioIncidencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aceptar"
+                android:textSize="24sp" />
 
         </LinearLayout>
     </ScrollView>
