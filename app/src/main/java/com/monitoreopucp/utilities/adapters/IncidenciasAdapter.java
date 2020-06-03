@@ -17,6 +17,18 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
 
     private Incidencia[] data;
     private Context context;
+    private OnItemClickListener mListener;
+
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
+
+
 
     public IncidenciasAdapter(Incidencia[] data, Context context) {
         this.data = data;
@@ -28,7 +40,7 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
     public IncidenciaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(context).inflate(R.layout.item_rv_incidencia,parent,false);
-        IncidenciaViewHolder incidenciaViewHolder = new IncidenciaViewHolder(itemView);
+        IncidenciaViewHolder incidenciaViewHolder = new IncidenciaViewHolder(itemView, mListener);
 
         return incidenciaViewHolder;
     }
@@ -57,10 +69,22 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
         public TextView textView;
         public ImageView imageView;
 
-        public IncidenciaViewHolder(View itemView) {
+        public IncidenciaViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             this.textView = itemView.findViewById(R.id.item_rv_TituloIncidencia);
             this.imageView = itemView.findViewById(R.id.item_rv_ImagenIncidencia);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 

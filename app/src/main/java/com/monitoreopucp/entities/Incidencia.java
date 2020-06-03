@@ -1,9 +1,10 @@
 package com.monitoreopucp.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Incidencia {
+public class Incidencia implements Serializable {
     private int id;
     private int idUsuario;
     private int idFoto;
