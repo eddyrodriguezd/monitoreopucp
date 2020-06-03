@@ -1,6 +1,8 @@
 package com.monitoreopucp.entities;
 
-public class Anotacion {
+import java.io.Serializable;
+
+public class Anotacion implements Serializable {
 
     private int idUsuario;
     private String contenido;

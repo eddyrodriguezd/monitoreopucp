@@ -39,10 +39,18 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.itemMenu_AgregarAnotacion:
+
+                Intent intent;
+                intent = new Intent(IncidenciaSeleccionada.this, AgregarAnotacionActivity.class);
+                intent.putExtra("titulo incidencia", itemSelected.getTitulo());
+
+                int requestCode_AgregarAnotacion = 2;
+                startActivityForResult(intent, requestCode_AgregarAnotacion);
+
                 return true;
             default:
-                Intent intent = new Intent();
-                setResult(RESULT_OK,intent);
+                Intent intent2 = new Intent();
+                setResult(RESULT_OK,intent2);
                 finish();
         }
 
