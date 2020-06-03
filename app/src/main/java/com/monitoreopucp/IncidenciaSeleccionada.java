@@ -20,7 +20,7 @@ import com.monitoreopucp.utilities.adapters.AnotacionAdapter;
 public class IncidenciaSeleccionada extends AppCompatActivity {
 
     private TextView mTextView_Titulo;
-    private TextView mTextVire_Cuerpo;
+    private TextView mTextView_Cuerpo;
     private RecyclerView mRecyclerView;
     private ImageView mImageView;
 
@@ -57,6 +57,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         bootActionBar();
         receiveItem();
         loadAnotaciones();
+        fillFields();
 
     }
 
@@ -91,23 +92,17 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new AnotacionAdapter(listaAnotaciones, IncidenciaSeleccionada.this);
         mRecyclerView.setAdapter(mAdapter);
+    }
 
-        /*
-        mAdapter.setOnItemClickListener(new IncidenciasAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+    public void fillFields() {
+        mTextView_Titulo = findViewById(R.id.textViewTituloIncidencia_IncidenciaSeleccionada);
+        mTextView_Cuerpo = findViewById(R.id.textViewContenidoIncidencia_IncidenciaSeleccionada);
+        mImageView = findViewById(R.id.imageViewFotoIncidencia_IncidenciaSeleccionada);
 
-                Incidencia selectedIncidencia = mLista[position];
-
-                Intent intent;
-                intent = new Intent(IncidenciasListActivity.this, IncidenciaSeleccionada.class);
-                intent.putExtra("item", selectedIncidencia);
-
-                int requestCode_IncidenciaSeleccionada = 1;
-                startActivityForResult(intent, requestCode_IncidenciaSeleccionada);
-
-            }
-        });*/
+        mTextView_Titulo.setText(itemSelected.getTitulo());
+        mTextView_Cuerpo.setText(itemSelected.getDescripcion());
+        // NO SE COMO PONER LA IMAGEN AUN
+        buildRecyclerView();
     }
 
 }
