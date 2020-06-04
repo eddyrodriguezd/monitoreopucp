@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".IncidenciaFormulario"
-            android:label="@string/title_incidencia_formulario"
             ></activity>
         <activity
             android:name=".IncidenciaSeleccionada"
