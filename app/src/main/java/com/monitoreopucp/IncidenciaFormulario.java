@@ -1,10 +1,14 @@
 package com.monitoreopucp;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +31,8 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private Button mButton_Aceptar;
 
     private Incidencia mItem;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int GALLERY_REQUEST_CODE = 2;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,16 +101,47 @@ public class IncidenciaFormulario extends AppCompatActivity {
         mButton_Camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dispatchTakePictureIntent();
             }
         });
         mButton_Galeria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pickFromGallery();
             }
         });
 
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_IMAGE_CAPTURE:
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    mImageView.setImageBitmap(imageBitmap);
+                case GALLERY_REQUEST_CODE:
+                    Uri selectedImage = data.getData();
+                    mImageView.setImageURI(selectedImage);
+            }
+        }
+    }
+
+    private void pickFromGallery(){
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        startActivityForResult(intent,GALLERY_REQUEST_CODE);
     }
 
 }
