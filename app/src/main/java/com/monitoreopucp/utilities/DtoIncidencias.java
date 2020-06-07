@@ -6,6 +6,9 @@ public class DtoIncidencias {
 
     private Incidencia[] lista;
 
+    public DtoIncidencias() {
+    }
+
     public DtoIncidencias(Incidencia[] lista) {
         this.lista = lista;
     }
