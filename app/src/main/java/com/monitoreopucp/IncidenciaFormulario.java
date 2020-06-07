@@ -3,9 +3,14 @@ package com.monitoreopucp;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +22,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.monitoreopucp.entities.Incidencia;
 
 public class IncidenciaFormulario extends AppCompatActivity {
@@ -33,6 +41,10 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private Incidencia mItem;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_REQUEST_CODE = 2;
+    private Bitmap imageBitmap;
+    private Uri selectedImage;
+    private FusedLocationProviderClient fusedLocationClient;
+    private Location lugar = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,6 +57,12 @@ public class IncidenciaFormulario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencia_formulario);
 
+        if (checkLocationPermission() == false){
+            askLocationPermission();
+        }
+
+        bootActionBar();
+        setForm();
 
 
     }
@@ -63,7 +81,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
         };
     }
 
-    public void setForm(int caso) {
+    public void setForm() {
 
         mTextView_Titulo = findViewById(R.id.textViewTituloIncidenica_FormularioIncidencia);
         mTextview_Cuerpo = findViewById(R.id.textViewContenidoIncidencia_FormularioIncidencia);
@@ -80,6 +98,8 @@ public class IncidenciaFormulario extends AppCompatActivity {
 
         String tituloActv;
         Intent intent = getIntent();
+        int caso = intent.getIntExtra("caso",1);
+
 
         if (caso == 1){
             tituloActv = "Crear Incidencia";
@@ -91,13 +111,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
         }
 
         this.setTitle(tituloActv);
-    }
 
-    public void fillFields (Incidencia item) {
-
-        mTextView_Titulo.setText(item.getTitulo());
-        mTextview_Cuerpo.setText(item.getDescripcion());
-        // NO SE COMO PONER LA IMAGEN, NI COMO VENDRA;
         mButton_Camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +124,17 @@ public class IncidenciaFormulario extends AppCompatActivity {
                 pickFromGallery();
             }
         });
+
+
+    }
+
+    public void fillFields (Incidencia item) {
+
+        mTextView_Titulo.setText(item.getTitulo());
+        mTextview_Cuerpo.setText(item.getDescripcion());
+        // NO SE COMO VENDRA LA IMAGEN
+        mCheckBox.setText(String.valueOf(item.getLatitud()) + String.valueOf(item.getLongitud()));
+        mCheckBox.setChecked(false);
 
     }
 
@@ -142,6 +167,50 @@ public class IncidenciaFormulario extends AppCompatActivity {
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
         startActivityForResult(intent,GALLERY_REQUEST_CODE);
+    }
+
+    private boolean checkLocationPermission(){
+
+        if (ContextCompat.checkSelfPermission(IncidenciaFormulario.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    private void askLocationPermission() {
+        ActivityCompat.requestPermissions(IncidenciaFormulario.this
+                , new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+    }
+
+    private void getLocation(){
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(IncidenciaFormulario.this);
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(IncidenciaFormulario.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    lugar = location;
+                    mCheckBox.setText("Se obtuvo ubicacion actual");
+                }
+                else {
+                    mCheckBox.setText("No se obtuvo la ubicacion");
+                }
+            }
+        });
+
+    }
+
+    public void onCheckboxClicked(View view) {
+
+
+
     }
 
 }

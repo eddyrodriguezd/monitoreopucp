@@ -33,6 +33,9 @@ public class IncidenciasListActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menuItem_NuevaIncidencia:
+                Intent intent2;
+                intent2 = new Intent(IncidenciasListActivity.this, IncidenciaFormulario.class);
+                intent2.putExtra("caso", 1);
                 return true;
             default:
                 Intent intent = new Intent();

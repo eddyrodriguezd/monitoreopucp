@@ -2,11 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.monitoreopucp">
 
+    <!-- Para poder usar la camara -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <!-- Acceso a la geolocalizacion -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Para poder grabar fotos en memoria -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -17,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".IncidenciaFormulario"
             ></activity>
