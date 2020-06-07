@@ -17,11 +17,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.utilities.DtoIncidencias;
 import com.monitoreopucp.utilities.adapters.UserIncidenciasHistoryAdapter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.monitoreopucp.utilities.Util.isInternetAvailable;
@@ -29,6 +35,11 @@ import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
 
     private static final int FILTER_REQUEST_CODE = 1;
+
+    private LatLng location;
+    private Date fromDate, toDate;
+    private String keywords;
+    private int status=2; //Por defecto se muestran "atendidos" y "por atender" (ambos)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +69,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         if (isInternetAvailable(this)) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-            //FALTA AÑADIR URL
-            String url = "";
-            StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, getFullUrl(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Gson gson = new Gson();
@@ -89,6 +98,38 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         }
     }
 
+    private String getFullUrl(){
+        //FALTA AÑADIR URL
+        String url = "...";
+        if (location != null){
+            url+= "?latitude=" +  location.latitude + "&longitude= " + location.longitude; //Añadir parámetro get
+        }
+        if (fromDate != null && toDate != null){
+            url+= "?startDate=" + fromDate.toString() + "&toDate=" + toDate.toString(); //Añadir parámetro get
+        }
+        if (keywords != null){
+            Log.d("Problem", "keyword!=null");
+            if (!keywords.equals(""))
+                Log.d("Problem", "keyword!=' '");
+            url+= "?keywords=" + keywords; //Añadir parámetro get
+        }
+
+        switch (status){
+            case 0: //Solo "por atender"
+                url+= "?status=" + status + "Solo por atender"; //Añadir parámetro get
+                break;
+            case 1: //Solo "atendidos"
+                url+= "?status=" + status + "Solo atendidos"; //Añadir parámetro get
+                break;
+            case 2: //Ambos
+                url+= "?status=" + status + "Ambos"; //Añadir parámetro get
+                break;
+        }
+        Toast.makeText(InfraIncidenciasHistoryActivity.this, url, Toast.LENGTH_SHORT).show();
+        return url;
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,7 +138,44 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                //Refrescar la lista con los filtros seleccionados
+                if(data!= null){
+
+                    //Location
+                    double latitude = data.getDoubleExtra("latitude", 0);
+                    double longitude = data.getDoubleExtra("longitude", 0);
+                    if(latitude!= 0 && longitude!=0){
+                        location = new LatLng(latitude, longitude);
+                    }
+
+                    //Date
+                    DateFormat format = new SimpleDateFormat("EEEE dd-MM-yyyy", new Locale("es", "PE"));
+                    String fromDateString = data.getStringExtra("fromDate");
+                    if(fromDateString!= null){
+                        try {
+                            fromDate = format.parse(fromDateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    String toDateString = data.getStringExtra("toDate");
+                    if(toDateString!= null){
+                        try {
+                            toDate = format.parse(toDateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    //Content
+                    keywords = data.getStringExtra("keywords");
+
+                    //Status
+                    status = data.getIntExtra("status", -1);
+
+                    getFullUrl();
+                }
+
             }
 
         }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,7 +52,7 @@ public class MapFilterActivity extends FragmentActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         location = new LatLng(-12.069512,-77.0815479);
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f));
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18f));
 
         this.googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
