@@ -1,11 +1,15 @@
 package com.monitoreopucp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -24,6 +28,8 @@ import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 
 public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
 
+    private static final int FILTER_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,14 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        findViewById(R.id.button_FilterHistory).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InfraIncidenciasHistoryActivity.this, FilterActivity.class);
+                startActivityForResult(intent, FILTER_REQUEST_CODE);
             }
         });
     }
@@ -72,6 +86,20 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                 }
             };
             requestQueue.add(stringRequest);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == FILTER_REQUEST_CODE){
+
+            if (resultCode == RESULT_OK) {
+
+                //Refrescar la lista con los filtros seleccionados
+            }
+
         }
     }
 }

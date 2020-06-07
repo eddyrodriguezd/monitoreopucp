@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonBack_FilterHistory"
+        android:id="@+id/button_FilterHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ButtonFilter"
