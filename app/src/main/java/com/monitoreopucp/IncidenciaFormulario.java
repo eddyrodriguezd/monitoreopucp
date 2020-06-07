@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -125,7 +126,6 @@ public class IncidenciaFormulario extends AppCompatActivity {
             }
         });
 
-
     }
 
     public void fillFields (Incidencia item) {
@@ -194,23 +194,26 @@ public class IncidenciaFormulario extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 // Got last known location. In some rare situations this can be null.
+                String mensaje = "";
                 if (location != null) {
                     // Logic to handle location object
                     lugar = location;
-                    mCheckBox.setText("Se obtuvo ubicacion actual");
+                    mensaje = "Se obtuvo ubicacion actual";
+                    mCheckBox.setText(mensaje);
                 }
                 else {
-                    mCheckBox.setText("No se obtuvo la ubicacion");
+                    mensaje = "No se obtuvo la ubicacion";
                 }
+
+                Toast toast = Toast.makeText(IncidenciaFormulario.this, mensaje, Toast.LENGTH_LONG);
+                toast.show();
             }
         });
 
     }
 
     public void onCheckboxClicked(View view) {
-
-
-
+        getLocation();
     }
 
 }
