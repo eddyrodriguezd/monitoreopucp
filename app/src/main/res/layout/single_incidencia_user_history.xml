@@ -22,7 +22,7 @@
         android:id="@+id/textViewSingleUserIncidencia_TitleValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="12dp"
         android:text="@string/Incidencia_TitleValue"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/textViewSingleUserIncidenciaTitle"
@@ -33,7 +33,7 @@
         android:id="@+id/textViewSingleUserIncidencia_RegisterDateValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="12dp"
         android:text="@string/Incidencia_DateValue"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/textViewSingleUserIncidenciaRegisterDate"
@@ -41,10 +41,21 @@
         app:layout_constraintTop_toTopOf="@+id/textViewSingleUserIncidenciaRegisterDate" />
 
     <TextView
+        android:id="@+id/textViewSingleUserIncidencia_CheckDateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="@string/Incidencia_DateValue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSingleUserIncidenciaCheckDate"
+        app:layout_constraintStart_toEndOf="@+id/textViewSingleUserIncidenciaCheckDate"
+        app:layout_constraintTop_toTopOf="@+id/textViewSingleUserIncidenciaCheckDate" />
+
+    <TextView
         android:id="@+id/textViewSingleUserIncidencia_StatusValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="12dp"
         android:text="@string/Incidencia_StatusValue"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/textViewSingleUserIncidenciaStatus"
@@ -55,7 +66,7 @@
         android:id="@+id/textViewSingleUserIncidenciaRegisterDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/RegisterDate"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
@@ -66,15 +77,26 @@
         android:id="@+id/textViewSingleUserIncidenciaStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/Status"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textViewSingleUserIncidenciaRegisterDate"
         app:layout_constraintTop_toBottomOf="@+id/textViewSingleUserIncidenciaRegisterDate" />
 
+    <TextView
+        android:id="@+id/textViewSingleUserIncidenciaCheckDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/CheckDate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewSingleUserIncidenciaStatus"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleUserIncidenciaStatus" />
+
     <ImageView
-        android:id="@+id/imageViewUserIncidencia"
+        android:id="@+id/imageViewSingleUserIncidencia"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
@@ -83,8 +105,9 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSingleUserIncidencia_StatusValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSingleUserIncidenciaCheckDate"
         app:srcCompat="@drawable/ic_launcher_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

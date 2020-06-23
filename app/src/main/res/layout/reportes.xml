@@ -67,18 +67,18 @@
         tools:layout_editor_absoluteX="157dp" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonConfirmAllFilters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="68dp"
         android:text="HISTÓRICO"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintBottom_toTopOf="@+id/buttonConfirmLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonConfirmLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
