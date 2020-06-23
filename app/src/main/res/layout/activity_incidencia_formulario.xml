@@ -75,9 +75,10 @@
             </LinearLayout>
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/checkBox_FormularioIncidencia"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:onClick="onCheckboxClicked"
                 android:text="Utilizar ubicación actual"
                 android:textAlignment="viewStart"
                 android:textSize="24sp" />

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "45440490205",
+    "firebase_url": "https://monitoreo-pucp-grupo.firebaseio.com",
+    "project_id": "monitoreo-pucp-grupo",
+    "storage_bucket": "monitoreo-pucp-grupo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45440490205:android:711ec29092a5c7f05e9934",
+        "android_client_info": {
+          "package_name": "com.monitoreopucp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45440490205-ismn2al5erjtlqrhbb6vg113tt3tncmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvOsdEiUPQAv58HexP28OCbZoS24UUY_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45440490205-ismn2al5erjtlqrhbb6vg113tt3tncmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
