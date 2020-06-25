@@ -1,5 +1,6 @@
 package com.monitoreopucp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,23 +19,46 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firestore.v1.StructuredQuery;
 import com.google.gson.Gson;
 import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.utilities.DtoIncidencias;
+import com.monitoreopucp.utilities.FirebaseCallback;
+import com.monitoreopucp.utilities.adapters.InfraIncidenciasHistoryAdapter;
 import com.monitoreopucp.utilities.adapters.UserIncidenciasHistoryAdapter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
+import static com.monitoreopucp.utilities.Util.DISTANCIA_MAXIMA_PARA_FILTROS;
+import static com.monitoreopucp.utilities.Util.getDistanceBetweenTwoPoints;
 import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 
 public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
 
     private static final int FILTER_REQUEST_CODE = 1;
+
+    private FirebaseFirestore fStore;
+    private FirebaseStorage fStorage;
+    private List<Incidencia> listaIncidencias;
+    private RecyclerView recyclerView;
 
     private LatLng location;
     private Date fromDate, toDate;
@@ -46,7 +70,11 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infra_incidencias_history);
 
-        getAllIncidenciasHistory();
+        listaIncidencias = new ArrayList<>();
+        fStore = FirebaseFirestore.getInstance();
+        fStorage = FirebaseStorage.getInstance();
+        recyclerView = findViewById(R.id.recyclerView_InfraHistory);
+        refreshView();
 
         findViewById(R.id.buttonBack_InfraHistory).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +92,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         });
     }
 
-    private void getAllIncidenciasHistory() {
+    /*private void getAllIncidenciasHistory() {
 
         if (isInternetAvailable(this)) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -76,10 +104,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                     DtoIncidencias dtoIncidencias = gson.fromJson(response, DtoIncidencias.class);
                     final Incidencia[] listaAllIncidencias = dtoIncidencias.getLista();
 
-                    UserIncidenciasHistoryAdapter listaAllIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaAllIncidencias, InfraIncidenciasHistoryActivity.this);
-                    RecyclerView recyclerView = findViewById(R.id.recyclerView_InfraHistory);
-                    recyclerView.setAdapter(listaAllIncidenciasAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(InfraIncidenciasHistoryActivity.this));
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -96,9 +121,9 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
             };
             requestQueue.add(stringRequest);
         }
-    }
+    }*/
 
-    private String getFullUrl(){
+    /*private String getFullUrl(){
         //FALTA AÑADIR URL
         String url = "...";
         if (location != null){
@@ -127,7 +152,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         }
         Toast.makeText(InfraIncidenciasHistoryActivity.this, url, Toast.LENGTH_SHORT).show();
         return url;
-    }
+    }*/
 
 
     @Override
@@ -173,11 +198,106 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                     //Status
                     status = data.getIntExtra("status", -1);
 
-                    getFullUrl();
+                    refreshView();
                 }
 
             }
 
         }
     }
+
+    public void refreshView(){
+        getIncidenciasHistory(new FirebaseCallback() {
+            @Override
+            public void onSuccess() {
+                InfraIncidenciasHistoryAdapter listaIncidenciasAdapter = new InfraIncidenciasHistoryAdapter(listaIncidencias,
+                        InfraIncidenciasHistoryActivity.this, fStorage.getReference());
+                recyclerView.setAdapter(listaIncidenciasAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(InfraIncidenciasHistoryActivity.this));
+            }
+        });
+    }
+
+    public void getIncidenciasHistory(final FirebaseCallback callback) {
+        if (isInternetAvailable(this)) {
+            listaIncidencias.clear();
+            CollectionReference collection = fStore.collection("incidencias");
+            Task<QuerySnapshot> querySnapshot = null;
+
+            if(fromDate == null){ //No considerar fecha
+                switch (status){
+                    case 0: //Solo "por atender"
+                        querySnapshot = collection.whereEqualTo("estado", "Por atender").get();
+                        Log.d("infoApp", "Filtro: Solo por atender");
+                        break;
+                    case 1: //Solo "atendidos"
+                        querySnapshot = collection.whereEqualTo("estado", "Atendido").get();
+                        Log.d("infoApp", "Filtro: Solo atendidos");
+                        break;
+                    case 2: //Ambos
+                        querySnapshot = collection.get();
+                        Log.d("infoApp", "SIN Filtro");
+                        break;
+                }
+            }
+            else{ //Considerar fecha
+                switch (status){
+
+                    case 0: //Solo "por atender"
+                        querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
+                                .whereLessThanOrEqualTo("fechaRegistro", toDate)
+                                .whereEqualTo("estado", "Por atender").get();
+                        break;
+                    case 1: //Solo "atendidos"
+                        querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
+                                .whereLessThanOrEqualTo("fechaRegistro", toDate)
+                                .whereEqualTo("estado", "Atendido").get();
+                        break;
+                    case 2: //Ambos
+                        querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
+                                .whereLessThanOrEqualTo("fechaRegistro", toDate)
+                                .get();
+                        break;
+                }
+            }
+
+            querySnapshot.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Incidencia incidencia = document.toObject(Incidencia.class);
+                            incidencia.setUbicacion((GeoPoint) Objects.requireNonNull(document.get("ubicacion")));
+
+                            //Filtro por palabras clave
+                            if(keywords != null){
+                                if(!incidencia.getDescripcion().toLowerCase().contains(keywords.toLowerCase()))
+                                    continue;
+                            }
+                            //Filtro por ubicación
+                            if (location != null){
+                                Log.d("infoLocation", "Selected: " + location.latitude + ", " + location.longitude);
+                                Log.d("infoLocation", "Incidencia: " + incidencia.getLatitud() + ", " + incidencia.getLongitud());
+                                if(getDistanceBetweenTwoPoints(location.latitude, incidencia.getLatitud(),
+                                        location.longitude, incidencia.getLongitud()) > DISTANCIA_MAXIMA_PARA_FILTROS)
+                                    Log.d("infoLocation", "distance:" + getDistanceBetweenTwoPoints(location.latitude, incidencia.getLatitud(),
+                                            location.longitude, incidencia.getLongitud()));
+                                    continue;
+                            }
+                            listaIncidencias.add(incidencia);
+                        }
+                        callback.onSuccess();
+                    } else {
+                        Toast.makeText(InfraIncidenciasHistoryActivity.this, "Ocurrió un problema", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+    }
+
+
+
 }
+
+

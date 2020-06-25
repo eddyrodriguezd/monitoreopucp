@@ -9,6 +9,8 @@ import android.os.Build;
 
 public class Util {
 
+    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.02; //0.02km = 20m
+
     public static boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -44,6 +46,14 @@ public class Util {
             return false;
 
         }
+    }
+
+    public static double getDistanceBetweenTwoPoints(double lat1, double lat2, double lon1, double lon2){
+        // Approximate Equirectangular -- works if (lat1,lon1) ~ (lat2,lon2)
+        int R = 6371; // km
+        double x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2);
+        double y = (lat2 - lat1);
+        return Math.sqrt(x * x + y * y) * R;
     }
 
 }
