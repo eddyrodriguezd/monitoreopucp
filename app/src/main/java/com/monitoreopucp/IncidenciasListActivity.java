@@ -88,6 +88,8 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 Intent intent2;
                 intent2 = new Intent(IncidenciasListActivity.this, IncidenciaFormulario.class);
                 intent2.putExtra("caso", 1);
+                int requestCode_CrearIncidencia = 1;
+                startActivityForResult(intent2, requestCode_CrearIncidencia);
                 return true;
             default:
                 Intent intent = new Intent();
@@ -272,6 +274,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         for (QueryDocumentSnapshot document : result) {
             aux = document.toObject(Incidencia.class);
             aux2 = (GeoPoint) document.get("ubicacion");
+            aux.setId(document.getId());
             if (isNearLocation(aux2)){
                 aux.setUbicacion(aux2);
                 collectionIncidencias.add(aux);

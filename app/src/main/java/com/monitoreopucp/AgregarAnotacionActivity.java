@@ -45,7 +45,7 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cuerpo_anotacion = mEditText_Anotacion.getText().toString();
-                NuevaAnotacion = new Anotacion(1231, cuerpo_anotacion);
+                NuevaAnotacion = new Anotacion("1231", cuerpo_anotacion);
 
                 Intent intent = new Intent();
                 intent.putExtra("nueva anotacion", NuevaAnotacion);
