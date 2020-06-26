@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.entities.Anotacion;
 import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.utilities.adapters.AnotacionAdapter;
@@ -27,6 +36,10 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     private Incidencia itemSelected;
     private Anotacion[] listaAnotaciones;
     private AnotacionAdapter mAdapter;
+
+    //Firebase
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,7 +101,9 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     }
 
     public void loadAnotaciones() {
-        int idIncidencia = itemSelected.getId();
+
+        //db.collection("incidencias").document(itemSelected.get)
+
 
         // OBTENER LA LISTA DE INCIDENCIAS QUE COINCIDEN CON "idIncidencia"
         // listaAnotaciones = ????
@@ -109,8 +124,19 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
 
         mTextView_Titulo.setText(itemSelected.getTitulo());
         mTextView_Cuerpo.setText(itemSelected.getDescripcion());
-        // NO SE COMO PONER LA IMAGEN AUN
+        loadImage();
         buildRecyclerView();
+    }
+
+    public void loadImage(){
+        StorageReference storageRef = storage.getReference();
+        final StorageReference spaceRef = storageRef.child(itemSelected.getIdFoto()+".jpg");
+        spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(IncidenciaSeleccionada.this).load(uri).into(mImageView);
+            }
+        });
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Incidencia implements Serializable {
-    private int id;
+    private String id;
     private int idUsuario;
     private String idFoto;//era int y lo cambie a String (JA)
     private String titulo;
@@ -22,7 +22,7 @@ public class Incidencia implements Serializable {
     public Incidencia() {
     }
 
-    public Incidencia(int id, int idUsuario, String idFoto, String titulo, String descripcion,
+    public Incidencia(String id, int idUsuario, String idFoto, String titulo, String descripcion,
                       double latitud, double longitud, List<Anotacion> anotaciones, Date fechaRegistro,
                       Date fechaRevision, String estado) {
         this.id = id;
@@ -38,11 +38,11 @@ public class Incidencia implements Serializable {
         this.estado = estado;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
