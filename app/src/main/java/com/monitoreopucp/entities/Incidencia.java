@@ -1,5 +1,7 @@
 package com.monitoreopucp.entities;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 public class Incidencia implements Serializable {
     private int id;
     private int idUsuario;
-    private int idFoto;
+    private String idFoto;//era int y lo cambie a String (JA)
     private String titulo;
     private String descripcion;
     private double latitud;
@@ -20,7 +22,7 @@ public class Incidencia implements Serializable {
     public Incidencia() {
     }
 
-    public Incidencia(int id, int idUsuario, int idFoto, String titulo, String descripcion,
+    public Incidencia(int id, int idUsuario, String idFoto, String titulo, String descripcion,
                       double latitud, double longitud, List<Anotacion> anotaciones, Date fechaRegistro,
                       Date fechaRevision, String estado) {
         this.id = id;
@@ -52,11 +54,11 @@ public class Incidencia implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public int getIdFoto() {
+    public String getIdFoto() {
         return idFoto;
     }
 
-    public void setIdFoto(int idFoto) {
+    public void setIdFoto(String idFoto) {
         this.idFoto = idFoto;
     }
 
@@ -122,5 +124,11 @@ public class Incidencia implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    //GEO-POINT
+    public void setUbicacion(GeoPoint ubicacion){
+        setLatitud(ubicacion.getLatitude());
+        setLongitud(ubicacion.getLongitude());
     }
 }
