@@ -106,6 +106,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         setContentView(R.layout.activity_incidencias_list);
 
         bootActionBar();
+        anonymousLogin();
         readIncidenciasDB();
 
     }
@@ -182,22 +183,17 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
 
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(IncidenciasListActivity.this);
 
-        fusedLocationClient.getLastLocation().addOnSuccessListener(IncidenciasListActivity.this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                // Got last known location. In some rare situations this can be null.
-                String mensaje = "";
-                if (location != null) {
-                    // Logic to handle location object
-                    mensaje = "Se obtuvo ubicacion actual";
-                } else {
-                    mensaje = "No se obtuvo la ubicacion";
+        if (checkLocationPermission()){
+            fusedLocationClient.getLastLocation().addOnSuccessListener(IncidenciasListActivity.this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    String mensaje = "";
+                    if (location != null) {
+                        mensaje = "Se obtuvo ubicacion actual";
+                    }
                 }
-
-                Toast toast = Toast.makeText(IncidenciasListActivity.this, mensaje, Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
+            });
+        }
 
     }
 
