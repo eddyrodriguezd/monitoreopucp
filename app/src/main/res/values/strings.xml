@@ -39,6 +39,8 @@
     <string name="titel_incidencia_seleccionada">Incidencia Seleccionada</string>
     <string name="sin_resolver_mis_incidencias">Sin Resolver</string>
     <string name="mis_incidencias_ver_historico">Ver Historico</string>
+    <string name="historial_user_atendidos">Historial (atendidos)</string>
+    <string name="historial_user_titulo">Historial de Reportes</string>
 
 
 </resources>
