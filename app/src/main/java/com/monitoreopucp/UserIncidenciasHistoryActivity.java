@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,12 +34,12 @@ public class UserIncidenciasHistoryActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int userId = intent.getIntExtra("userId", -1);
-
+        Log.i("sebastian","ID DEL USUARIO LOGEADO: "+ userId );
         if(userId != -1){
             getUserIncidenciasHistory(userId);
         }
         else{
-            Toast.makeText(UserIncidenciasHistoryActivity.this, "Ocurrió un problema", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserIncidenciasHistoryActivity.this, "Usuario no detectado", Toast.LENGTH_SHORT).show();
         }
 
 
