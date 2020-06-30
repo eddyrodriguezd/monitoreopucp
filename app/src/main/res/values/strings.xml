@@ -41,6 +41,10 @@
     <string name="mis_incidencias_ver_historico">Ver Historico</string>
     <string name="historial_user_atendidos">Historial (atendidos)</string>
     <string name="historial_user_titulo">Historial de Reportes</string>
+    <string name="UserIncidencias_titulo">Tus Incidencias Reportadas</string>
+    <string name="Nueva_Anotacion_Titulo">Anotacion: </string>
+    <string name="Nueva_Anotacion_Text_Hint">Escriba aqui su anotacion</string>
+    <string name="Nueva_Anotacion_Incidencia">Incidencia: \n</string>
 
 
 </resources>

@@ -38,11 +38,10 @@
             android:name=".UserIncidenciasHistoryActivity"
             android:label="@string/UserIncidenciasHistory">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        </activity>
+        <activity android:name=".UserIncidenciasReportadasActivity" android:label="@string/UserIncidencias_titulo">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         
@@ -51,7 +50,14 @@
             android:label="@string/title_incidencias_cercanas"/>
         <activity
             android:name=".AgregarAnotacionActivity"
-            android:label="@string/nueva_anotacion_title" />
+            android:label="@string/nueva_anotacion_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
 

@@ -15,39 +15,32 @@
             android:id="@+id/textViewTituloincidencia_AgregarAnotacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/Nueva_Anotacion_Incidencia"
             android:textAlignment="center"
-            android:textSize="28sp" />
-
-        <ScrollView
-            android:id="@+id/scrollNuevaAnotacion"
-            android:layout_width="match_parent"
-            android:layout_height="260dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/inputNuevaAnotacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Anotacion"
-                    android:inputType="textMultiLine"
-                    android:textSize="22sp" />
-            </LinearLayout>
-        </ScrollView>
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="38dp"
+            android:text="@string/Nueva_Anotacion_Titulo"
+            android:textAlignment="textStart"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/inputNuevaAnotacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Nueva_Anotacion_Text_Hint"
+            android:inputType="textMultiLine"
+            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="bottom"
             android:orientation="horizontal">
 
             <Button
@@ -55,14 +48,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Aceptar" />
+                android:text="@string/ButtonAccept" />
 
             <Button
                 android:id="@+id/buttonCancelar_NuevaAnotacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Cancelar" />
+                android:text="@string/ButtonBack" />
         </LinearLayout>
 
     </LinearLayout>
