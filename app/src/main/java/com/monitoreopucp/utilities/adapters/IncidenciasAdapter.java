@@ -1,23 +1,34 @@
 package com.monitoreopucp.utilities.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.R;
 import com.monitoreopucp.entities.Incidencia;
+
+import java.util.ArrayList;
 
 public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.IncidenciaViewHolder> {
 
     private Incidencia[] data;
+    private Bitmap[] fotos;
     private Context context;
     private OnItemClickListener mListener;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
 
     public interface OnItemClickListener {
@@ -30,11 +41,11 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
 
 
 
-    public IncidenciasAdapter(Incidencia[] data, Context context) {
+    public IncidenciasAdapter(Incidencia[] data, Bitmap[] fotos, Context context) {
         this.data = data;
+        this.fotos = fotos;
         this.context = context;
     }
-
 
     @Override
     public IncidenciaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,16 +57,23 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
     }
 
     @Override
-    public void onBindViewHolder(IncidenciaViewHolder holder, int position) {
+    public void onBindViewHolder(final IncidenciaViewHolder holder, int position) {
 
         String Titulo = data[position].getTitulo();
-        String IdFoto = data[position].getIdFoto();
+        //Bitmap Foto = fotos[position];
+        // Create a storage reference from our app
 
-        //Obtener idRsc a partir del IdFoto;
-        int idRsc = 0;
+        StorageReference storageRef = storage.getReference();
+        final StorageReference spaceRef = storageRef.child(data[position].getIdFoto()+".jpg");
+        spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).into(holder.imageView);
+            }
+        });
 
         holder.textView.setText(Titulo);
-        holder.imageView.setImageResource(idRsc);
+        //holder.imageView.setImageBitmap(Foto);
 
     }
 
@@ -63,6 +81,10 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
     public int getItemCount() {
         return data.length;
     }
+
+
+
+
 
     public static class IncidenciaViewHolder extends RecyclerView.ViewHolder{
 

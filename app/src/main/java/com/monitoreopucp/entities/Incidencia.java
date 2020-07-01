@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Incidencia implements Serializable {
-    private int id;
     private Map<String, String> usuario;
-    private String idFoto;
+    private String id;
+    private int idUsuario;
+    private String idFoto;//era int y lo cambie a String (JA)
     private String titulo;
     private String descripcion;
     private double latitud;
@@ -26,11 +27,27 @@ public class Incidencia implements Serializable {
         this.fechaRevision = null;
     }
 
-    public int getId() {
+    public Incidencia(String id, int idUsuario, String idFoto, String titulo, String descripcion,
+                      double latitud, double longitud, List<Anotacion> anotaciones, Date fechaRegistro,
+                      Date fechaRevision, String estado) {
+        this.id = id;
+        this.idUsuario = idUsuario;
+        this.idFoto = idFoto;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.anotaciones = anotaciones;
+        this.fechaRegistro = fechaRegistro;
+        this.fechaRevision = fechaRevision;
+        this.estado = estado;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

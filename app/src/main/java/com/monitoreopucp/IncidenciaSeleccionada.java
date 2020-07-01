@@ -3,9 +3,11 @@ package com.monitoreopucp;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,9 +15,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.entities.Anotacion;
 import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.utilities.adapters.AnotacionAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IncidenciaSeleccionada extends AppCompatActivity {
 
@@ -25,8 +42,14 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     private ImageView mImageView;
 
     private Incidencia itemSelected;
-    private Anotacion[] listaAnotaciones;
     private AnotacionAdapter mAdapter;
+    private ArrayList<Anotacion> anotaciones = new ArrayList<Anotacion>();
+    private Anotacion[] mAnotaciones;
+
+    //Firebase
+    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,11 +85,11 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencia_seleccionada);
 
+        anonymousLogin();
         bootActionBar();
         receiveItem();
-        loadAnotaciones();
         fillFields();
-
+        loadAnotaciones();
     }
 
     public void bootActionBar() {
@@ -88,17 +111,24 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     }
 
     public void loadAnotaciones() {
-        int idIncidencia = itemSelected.getId();
 
-        // OBTENER LA LISTA DE INCIDENCIAS QUE COINCIDEN CON "idIncidencia"
-        // listaAnotaciones = ????
+        db.collection("incidencias").document(itemSelected.getId())
+                .collection("anotaciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    setAnotaciones(task.getResult());
+                }
+            }
+        });
 
     }
 
     public void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyclerViewAnotaciones_IncidenciaSeleccionada);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(IncidenciaSeleccionada.this));
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new AnotacionAdapter(listaAnotaciones, IncidenciaSeleccionada.this);
+        mAdapter = new AnotacionAdapter(mAnotaciones, IncidenciaSeleccionada.this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -109,8 +139,47 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
 
         mTextView_Titulo.setText(itemSelected.getTitulo());
         mTextView_Cuerpo.setText(itemSelected.getDescripcion());
-        // NO SE COMO PONER LA IMAGEN AUN
-        buildRecyclerView();
+        loadImage();
     }
 
+    public void loadImage(){
+        StorageReference storageRef = storage.getReference();
+        final StorageReference spaceRef = storageRef.child(itemSelected.getIdFoto()+".jpg");
+        spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(IncidenciaSeleccionada.this).load(uri).into(mImageView);
+            }
+        });
+    }
+    //LOGIN
+    private void anonymousLogin(){
+        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                // do your stuff
+            }
+        })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                    }
+                });
+    }
+
+
+
+
+    //Listener
+    public void setAnotaciones(QuerySnapshot result) {
+        Anotacion aux;
+        for(QueryDocumentSnapshot documentSnapshot : result){
+            aux = documentSnapshot.toObject(Anotacion.class);
+            if (documentSnapshot != null){
+                anotaciones.add(aux);
+            }
+        }
+        mAnotaciones = anotaciones.toArray(new Anotacion[anotaciones.size()]);
+        buildRecyclerView();
+    }
 }

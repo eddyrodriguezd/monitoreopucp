@@ -19,12 +19,12 @@
             android:layout_marginBottom="1dp"
             android:orientation="vertical">
 
-            <TextView
+            <EditText
                 android:id="@+id/textViewTituloIncidenica_FormularioIncidencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="30sp" />
+                android:hint="Titulo"
+                android:textSize="22sp" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -35,12 +35,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/textViewContenidoIncidencia_FormularioIncidencia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="24sp" />
+                        android:hint="Contenido"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </ScrollView>
 
