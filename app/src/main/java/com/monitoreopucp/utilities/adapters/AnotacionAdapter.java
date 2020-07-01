@@ -53,35 +53,37 @@ public class AnotacionAdapter extends RecyclerView.Adapter<AnotacionAdapter.Anot
     }
 
     @Override
-    public void onBindViewHolder(AnotacionViewHolder holder, int position) {
+    public void onBindViewHolder(final AnotacionViewHolder holder, int position) {
         final Anotacion[] anotacion = {data[position]};
         final String[] titulo = new String[1];
         String cuerpo;
 
-        db.collection("usuarios").document(data[position].getIdUsuario()).
+        db.collection("usuarios").document(anotacion[0].getIdUsuario()).
                 get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    Usuario usuario = document.toObject(Usuario.class);
-                    titulo[0] = usuario.getNombre() + ", " + usuario.getApellido();
+                    titulo[0] = (String) document.getData().get("nombre");
+                    writeOnHolder(holder,titulo[0],anotacion[0]);
                 }
                 else {
-                    titulo[0] = String.valueOf(anotacion[0].getIdUsuario());
+                    titulo[0] = anotacion[0].getIdUsuario();
+                    writeOnHolder(holder,titulo[0],anotacion[0]);
                 }
             }
         });
-        cuerpo = String.valueOf(anotacion[0].getContenido());
-
-        holder.textTitulo.setText(titulo[0]);
-        holder.textCuerpo.setText(cuerpo);
 
     }
 
     @Override
     public int getItemCount() {
         return data.length;
+    }
+
+    public void writeOnHolder(AnotacionViewHolder holder, String title, Anotacion anotacion){
+        holder.textTitulo.setText(title);
+        holder.textCuerpo.setText(anotacion.getContenido());
     }
 
 }
