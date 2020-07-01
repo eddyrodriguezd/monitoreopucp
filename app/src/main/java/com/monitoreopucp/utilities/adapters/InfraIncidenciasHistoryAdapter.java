@@ -2,6 +2,8 @@ package com.monitoreopucp.utilities.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +19,28 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.monitoreopucp.R;
 import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.entities.Usuario;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 
 public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIncidenciasHistoryAdapter.InfraIncidenciaHistoryViewHolder> {
-    Incidencia[] listaIncidencias;
-    Context context;
+    private List<Incidencia> listaIncidencias;
+    private Context context;
+    private StorageReference storageReference;
 
-    public InfraIncidenciasHistoryAdapter(Incidencia[] listaIncidencias, Context c){
+    public InfraIncidenciasHistoryAdapter(List<Incidencia> listaIncidencias, Context c, StorageReference storageReference){
         this.listaIncidencias = listaIncidencias;
         this.context = c;
+        this.storageReference = storageReference;
     }
 
     public static class InfraIncidenciaHistoryViewHolder extends RecyclerView.ViewHolder {
@@ -41,6 +49,7 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
         private TextView textViewSingleInfraIncidencia_UserValue;
         private TextView textViewSingleInfraIncidencia_RegisterDateValue;
         private TextView textViewSingleInfraIncidencia_StatusValue;
+        private TextView textViewSingleInfraIncidencia_CheckDate;
         private TextView textViewSingleInfraIncidencia_CheckDateValue;
         private TextView textViewSingleInfraIncidencia_AnotacionesValue;
         private TextView textViewSingleInfraIncidencia_Anotaciones;
@@ -52,6 +61,7 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
             textViewSingleInfraIncidencia_UserValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_UserValue);
             textViewSingleInfraIncidencia_RegisterDateValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_RegisterDateValue);
             textViewSingleInfraIncidencia_StatusValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_StatusValue);
+            textViewSingleInfraIncidencia_CheckDate = itemView.findViewById(R.id.textViewSingleInfraIncidencia_CheckDate);
             textViewSingleInfraIncidencia_CheckDateValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_CheckDateValue);
             textViewSingleInfraIncidencia_AnotacionesValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_AnotacionesValue);
             textViewSingleInfraIncidencia_Anotaciones = itemView.findViewById(R.id.textViewSingleInfraIncidencia_Anotaciones);
@@ -68,20 +78,26 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull InfraIncidenciasHistoryAdapter.InfraIncidenciaHistoryViewHolder holder, int position) {
-        Incidencia incidencia = listaIncidencias[position];
+    public void onBindViewHolder(@NonNull InfraIncidenciaHistoryViewHolder holder, int position) {
+        Incidencia incidencia = listaIncidencias.get(position);
         holder.textViewSingleInfraIncidencia_TitleValue.setText(incidencia.getTitulo());
 
-        Usuario usuario = getUsuarioById(incidencia.getIdUsuario());
-        if(usuario!= null){
-            holder.textViewSingleInfraIncidencia_UserValue.setText(usuario.getNombre() + " " + usuario.getApellido());
-        }
+        holder.textViewSingleInfraIncidencia_UserValue.setText(incidencia.getUsuario().get("nombre"));
 
         holder.textViewSingleInfraIncidencia_RegisterDateValue.setText(incidencia.getFechaRegistro().toString());
         holder.textViewSingleInfraIncidencia_StatusValue.setText(incidencia.getEstado());
-        holder.textViewSingleInfraIncidencia_CheckDateValue.setText(incidencia.getFechaRevision().toString());
 
-        if(incidencia.getAnotaciones().size()>0){
+        getIncidenciaImage(incidencia.getIdFoto() + ".jpg", holder);
+
+        if(incidencia.getFechaRevision()!= null){
+            holder.textViewSingleInfraIncidencia_CheckDateValue.setText(incidencia.getFechaRevision().toString());
+        }
+        else{
+            holder.textViewSingleInfraIncidencia_CheckDate.setVisibility(View.GONE);
+            holder.textViewSingleInfraIncidencia_CheckDateValue.setVisibility(View.GONE);
+        }
+
+        if(!incidencia.getAnotaciones().isEmpty()){
             holder.textViewSingleInfraIncidencia_AnotacionesValue.setText(incidencia.getAnotaciones().size());
         }
         else{
@@ -91,43 +107,19 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
 
     }
 
+    public void getIncidenciaImage(final String photoName, final InfraIncidenciaHistoryViewHolder holder){
+        storageReference.child(photoName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri)
+                        .into(holder.imageViewInfraIncidencia);
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
-        return 0;
+        return listaIncidencias.size();
     }
-
-    public Usuario getUsuarioById(int userId){
-        final Usuario[] usuario = {null};
-
-        if (isInternetAvailable(context)) {
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-            //FALTA AÑADIR URL
-            String url = "" + "?id=" + userId;
-            StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Gson gson = new Gson();
-                    usuario[0] = gson.fromJson(response, Usuario.class);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    //DE SER NECESARIO (Como el Api-key en el lab)
-                    return null;
-                }
-            };
-            requestQueue.add(stringRequest);
-        }
-
-        return usuario[0];
-    }
-
-
 }

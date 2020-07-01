@@ -49,7 +49,7 @@ public class IncidenciasAdapter extends RecyclerView.Adapter<IncidenciasAdapter.
     public void onBindViewHolder(IncidenciaViewHolder holder, int position) {
 
         String Titulo = data[position].getTitulo();
-        int IdFoto = data[position].getIdFoto();
+        String IdFoto = data[position].getIdFoto();
 
         //Obtener idRsc a partir del IdFoto;
         int idRsc = 0;
