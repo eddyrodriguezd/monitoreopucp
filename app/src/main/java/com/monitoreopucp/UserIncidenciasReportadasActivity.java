@@ -62,6 +62,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_tus_incidencias_reportadas);
+        setTitle("Mis Incidencias Reportadas");
 
         listaIncidenciasSinResolver = new ArrayList<>();
         fStore = FirebaseFirestore.getInstance();

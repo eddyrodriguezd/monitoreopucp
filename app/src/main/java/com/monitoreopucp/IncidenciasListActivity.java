@@ -121,7 +121,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         }
 
         bootActionBar();
-        anonymousLogin();
+        //anonymousLogin();
         readIncidenciasDB();
 
     }

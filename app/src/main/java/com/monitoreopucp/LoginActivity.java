@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,8 +33,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseFirestore fStore;
 
-    private EditText editTextMail;
-    private EditText editTextPassword;
+    /*private EditText editTextMail;
+    private EditText editTextPassword;*/
+
+    private String editTextMail;
+    private String editTextPassword;
 
     private Usuario currentUser;
 
@@ -42,32 +46,40 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_usuario);
 
-        editTextMail = findViewById(R.id.editTextMail);
-        editTextPassword = findViewById(R.id.editTextPassword);
+        /*editTextMail = findViewById(R.id.editTextMail);
+        editTextPassword = findViewById(R.id.editTextPassword);*/
+
+        TextInputLayout textInputLayoutMail = findViewById(R.id.editTextMail);
+        editTextMail = textInputLayoutMail.getEditText().getText().toString();
+
+        TextInputLayout textInputLayoutPassword = findViewById(R.id.editTextPassword);
+        editTextPassword = textInputLayoutPassword.getEditText().getText().toString();
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance();
 
-        Button buttonSignIn = findViewById(R.id.buttonAcceder);
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+        if(user != null){
+            if(user.isEmailVerified())
+                signIn();
+        }
+
+        findViewById(R.id.buttonAcceder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editTextMail.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()) {
+                if (!editTextMail.equals("") || !editTextPassword.equals("")) {
                     Toast.makeText(LoginActivity.this, "Por favor rellene todos los campos", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    mAuth.signInWithEmailAndPassword(editTextMail.getText().toString(), editTextPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.signInWithEmailAndPassword(editTextMail, editTextPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 user= mAuth.getCurrentUser();
-                                //if (user.isEmailVerified()){
+                                if (user.isEmailVerified())
                                     signIn();
-                                /*}
-                                else{
+                                else
                                     Toast.makeText(LoginActivity.this, "Por favor verifique su correo", Toast.LENGTH_SHORT).show();
-                                }*/
                             }
                             else{
                                 Toast.makeText(LoginActivity.this, "Credenciales erróneas", Toast.LENGTH_SHORT).show();
@@ -75,6 +87,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        findViewById(R.id.buttonRegister).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterUser.class));
             }
         });
 

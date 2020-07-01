@@ -131,7 +131,7 @@ public class RegisterUser extends AppCompatActivity {
                         }
                         else {
                             Toast.makeText(RegisterUser.this,
-                                    "Error: no se creo el ususario", Toast.LENGTH_LONG).show();
+                                    "Error: no se creo el usuario", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -144,6 +144,9 @@ public class RegisterUser extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             FirebaseAuth.getInstance().signOut();
+                            Toast.makeText(RegisterUser.this,"Por favor revise la bandeja de entrada" +
+                                    "de su correo: " + correo, Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                         else
                         {

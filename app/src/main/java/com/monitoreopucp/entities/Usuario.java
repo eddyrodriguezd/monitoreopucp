@@ -7,13 +7,13 @@ public class Usuario implements Serializable {
     private String nombre;
     private String apellido;
     private String correo;
-    private int codigo;
+    private String codigo;
     private boolean infra;
 
     public Usuario() {
     }
 
-    public Usuario(String id, String nombre, String apellido, String correo, int codigo, boolean infra) {
+    public Usuario(String id, String nombre, String apellido, String correo, String codigo, boolean infra) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -54,11 +54,11 @@ public class Usuario implements Serializable {
         this.correo = correo;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
