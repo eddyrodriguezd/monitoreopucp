@@ -3,7 +3,7 @@ package com.monitoreopucp.entities;
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
-    private int id;
+    private String id;
     private String nombre;
     private String apellido;
     private String correo;
@@ -13,7 +13,7 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String apellido, String correo, int codigo, boolean infra) {
+    public Usuario(String id, String nombre, String apellido, String correo, int codigo, boolean infra) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -22,11 +22,11 @@ public class Usuario implements Serializable {
         this.infra = infra;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

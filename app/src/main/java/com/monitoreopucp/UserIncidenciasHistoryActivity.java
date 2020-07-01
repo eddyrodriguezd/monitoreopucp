@@ -67,10 +67,10 @@ public class UserIncidenciasHistoryActivity extends AppCompatActivity {
                     DtoIncidencias dtoIncidencias = gson.fromJson(response, DtoIncidencias.class);
                     final Incidencia[] listaIncidencias = dtoIncidencias.getLista();
 
-                    UserIncidenciasHistoryAdapter listaIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaIncidencias, UserIncidenciasHistoryActivity.this);
+                    /*UserIncidenciasHistoryAdapter listaIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaIncidencias, UserIncidenciasHistoryActivity.this);
                     RecyclerView recyclerView = findViewById(R.id.recyclerView_UserHistory);
                     recyclerView.setAdapter(listaIncidenciasAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasHistoryActivity.this));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasHistoryActivity.this));*/
                 }
             }, new Response.ErrorListener() {
                 @Override

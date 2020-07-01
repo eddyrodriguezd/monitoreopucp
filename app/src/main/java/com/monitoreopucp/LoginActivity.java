@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                     if(documentSnapshot!= null){
                         currentUser = documentSnapshot.toObject(Usuario.class);
+                        currentUser.setId(mAuth.getCurrentUser().getUid());
                         callback.onSuccess();
                     }
 
