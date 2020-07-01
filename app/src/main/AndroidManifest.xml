@@ -42,13 +42,15 @@
             android:label="@string/title_activity_map_filter" />
         <activity android:name=".FilterActivity" />
         <activity android:name=".InfraIncidenciasHistoryActivity" >
+
+        </activity>
+        <activity android:name=".UserIncidenciasReportadasActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".UserIncidenciasHistoryActivity" />
         <activity
             android:name=".IncidenciasListActivity"
