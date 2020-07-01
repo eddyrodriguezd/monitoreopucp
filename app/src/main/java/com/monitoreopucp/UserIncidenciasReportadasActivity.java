@@ -50,7 +50,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
         int userId = intent.getIntExtra("userId", -1);
         Log.i("sebastian","ID DEL USUARIO LOGEADO: "+ userId );
         if(userId != -1){
-            getUserIncidenciasHistory(userId);
+            getUserIncidenciasSinResolver(userId);
         }
         else{
             Toast.makeText(UserIncidenciasReportadasActivity.this, "Usuario no detectado", Toast.LENGTH_SHORT).show();
@@ -79,22 +79,21 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
 
     }
 
-    private void getUserIncidenciasHistory(int userId){
+    private void getUserIncidenciasSinResolver(int userId){
 
         if (isInternetAvailable(this)) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             //FALTA AÑADIR URL
-            String url = "" + "?id=" + userId + "&estado=" + R.string.Atendido;
+            String url = "" + "?id=" + userId + "&estado=" + R.string.NoAtendido;
             StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     DtoIncidencias dtoIncidencias = gson.fromJson(response, DtoIncidencias.class);
                     final Incidencia[] listaIncidencias = dtoIncidencias.getLista();
-
                     UserIncidenciasHistoryAdapter listaIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaIncidencias, UserIncidenciasReportadasActivity.this);
-                    RecyclerView recyclerView = findViewById(R.id.recyclerView_UserHistory);
+                    RecyclerView recyclerView = findViewById(R.id.recyclerView_UserIncidenciasSinResolver);
                     recyclerView.setAdapter(listaIncidenciasAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasReportadasActivity.this));
                 }
