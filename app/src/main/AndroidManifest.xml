@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.monitoreopucp">
-
     <!-- Para poder usar la camara -->
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
-
-    <!-- Acceso a la geolocalizacion -->
+        android:required="true" /> <!-- Acceso a la geolocalizacion -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- Para poder grabar fotos en memoria -->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Para poder grabar fotos en memoria -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,13 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity
-            android:name=".IncidenciaFormulario"
-            ></activity>
+        <activity android:name=".RegisterUser"></activity>
+        <activity android:name=".IncidenciaFormulario" />
         <activity
             android:name=".IncidenciaSeleccionada"
-            android:label="@string/titel_incidencia_seleccionada"/>
+            android:label="@string/titel_incidencia_seleccionada" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -41,15 +33,16 @@
             android:name=".MapFilterActivity"
             android:label="@string/title_activity_map_filter" />
         <activity android:name=".FilterActivity" />
-        <activity android:name=".InfraIncidenciasHistoryActivity" >
-
-        </activity>
+        <activity android:name=".InfraIncidenciasHistoryActivity"></activity>
         <activity android:name=".UserIncidenciasReportadasActivity">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".UserIncidenciasHistoryActivity" />
         <activity
@@ -66,12 +59,14 @@
             android:label="@string/nueva_anotacion_title" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
 
         <meta-data
