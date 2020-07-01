@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterUser"></activity>
+        <activity android:name=".ReportesActivity"></activity>
+        <activity android:name=".RecuperarCuenta" />
+        <activity android:name=".RegisterUser" />
         <activity android:name=".IncidenciaFormulario" />
         <activity
             android:name=".IncidenciaSeleccionada"
@@ -33,7 +35,7 @@
             android:name=".MapFilterActivity"
             android:label="@string/title_activity_map_filter" />
         <activity android:name=".FilterActivity" />
-        <activity android:name=".InfraIncidenciasHistoryActivity"></activity>
+        <activity android:name=".InfraIncidenciasHistoryActivity" />
         <activity android:name=".UserIncidenciasReportadasActivity">
 
             <!--
