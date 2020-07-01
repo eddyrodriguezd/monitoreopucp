@@ -18,7 +18,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ReportesActivity"/>
         <activity android:name=".RecuperarCuenta" />
-        <activity android:name=".RegisterUser" />
+        <activity
+            android:name=".RegisterUser" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".IncidenciaFormulario" />
         <activity
             android:name=".IncidenciaSeleccionada"
@@ -52,11 +59,11 @@
             android:name=".AgregarAnotacionActivity"
             android:label="@string/nueva_anotacion_title" />
         <activity android:name=".LoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity android:name=".MainActivity">
 
