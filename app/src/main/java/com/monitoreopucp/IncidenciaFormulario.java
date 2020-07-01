@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
@@ -65,10 +66,13 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private Incidencia mItem;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_REQUEST_CODE = 2;
+    static final int MAP_FILTER_REQUEST_CODE = 3;
     private Bitmap imageBitmap;
     private Uri selectedImage;
     private FusedLocationProviderClient fusedLocationClient;
     private Location lugar = null;
+    private GeoPoint geoPoint;
+    private boolean locationFromMap = false;
     private int CASE = 1;
     private String incidenciaUID;
 
@@ -169,7 +173,15 @@ public class IncidenciaFormulario extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     getLocation();
+                    locationFromMap = false;
                 }
+            }
+        });
+        mButton_Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IncidenciaFormulario.this, MapFilterActivity.class);
+                startActivityForResult(intent, MAP_FILTER_REQUEST_CODE);
             }
         });
 
@@ -205,6 +217,13 @@ public class IncidenciaFormulario extends AppCompatActivity {
                 case GALLERY_REQUEST_CODE:
                     Uri selectedImage = data.getData();
                     mImageView.setImageURI(selectedImage);
+                case MAP_FILTER_REQUEST_CODE:
+                    if (data != null) {
+                        double latitude = data.getDoubleExtra("latitude", 0);
+                        double longitude = data.getDoubleExtra("longitude", 0);
+                        geoPoint = new GeoPoint(latitude, longitude);
+                        locationFromMap = true;
+                    }
             }
         }
     }
@@ -314,8 +333,15 @@ public class IncidenciaFormulario extends AppCompatActivity {
         if (CASE == 1){
             Date currentTime = Calendar.getInstance().getTime();
             incidencia.put("fechaRegistro",new Timestamp(currentTime));
-            GeoPoint geoPoint = new GeoPoint(lugar.getLatitude(),lugar.getLongitude());
-            incidencia.put("ubicacion", geoPoint);
+            GeoPoint geo;
+            if (locationFromMap){
+                geo = geoPoint;
+            }
+            else {
+                geo = new GeoPoint(lugar.getLatitude(),lugar.getLongitude());
+            }
+
+            incidencia.put("ubicacion", geo);
 
             db.collection("incidencias")
                     .add(incidencia)
