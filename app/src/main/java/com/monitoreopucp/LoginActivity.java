@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     /*private EditText editTextMail;
     private EditText editTextPassword;*/
 
-    private String editTextMail;
-    private String editTextPassword;
+    private TextInputLayout textInputLayoutMail;
+    private TextInputLayout textInputLayoutPassword;
 
     private Usuario currentUser;
 
@@ -49,11 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         /*editTextMail = findViewById(R.id.editTextMail);
         editTextPassword = findViewById(R.id.editTextPassword);*/
 
-        TextInputLayout textInputLayoutMail = findViewById(R.id.editTextMail);
-        editTextMail = textInputLayoutMail.getEditText().getText().toString();
-
-        TextInputLayout textInputLayoutPassword = findViewById(R.id.editTextPassword);
-        editTextPassword = textInputLayoutPassword.getEditText().getText().toString();
+        textInputLayoutMail = findViewById(R.id.editTextMail);
+        textInputLayoutPassword = findViewById(R.id.editTextPassword);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -67,7 +64,10 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.buttonAcceder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextMail.equals("") || !editTextPassword.equals("")) {
+                String editTextMail = textInputLayoutMail.getEditText().getText().toString();
+                String editTextPassword = textInputLayoutPassword.getEditText().getText().toString();
+
+                if (editTextMail.equals("") || editTextPassword.equals("")) {
                     Toast.makeText(LoginActivity.this, "Por favor rellene todos los campos", Toast.LENGTH_SHORT).show();
                 }
                 else{
