@@ -41,6 +41,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.monitoreopucp.entities.Incidencia;
+import com.monitoreopucp.entities.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -59,6 +60,8 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private Button mButton_Location;
     private Button mButton_Aceptar;
 
+    private Usuario currentUser;
+
     private Incidencia mItem;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GALLERY_REQUEST_CODE = 2;
@@ -74,7 +77,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private StorageReference storageRef;
     private StorageReference mountainsRef;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String idFoto = "AEA";
+    private String idFoto;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,9 +90,12 @@ public class IncidenciaFormulario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencia_formulario);
 
-        if (checkLocationPermission() == false){
+        if (!checkLocationPermission()){
             askLocationPermission();
         }
+
+        Intent intent = getIntent();
+        currentUser = (Usuario) intent.getSerializableExtra("currentUser");
 
         bootActionBar();
         setForm();
@@ -294,8 +300,9 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private void uploadInfo(){
 
         Map<String, Object> infoUsuario = new HashMap<>();
-        infoUsuario.put("codigo", "20151703");
-        infoUsuario.put("nombre", "José Alonso Ruiz");
+        infoUsuario.put("id", currentUser.getId());
+        infoUsuario.put("codigo", currentUser.getCodigo());
+        infoUsuario.put("nombre", currentUser.getNombre() + " " + currentUser.getApellido());
 
         Map<String, Object> incidencia = new HashMap<>();
         incidencia.put("descripcion", mTextview_Cuerpo.getText().toString());

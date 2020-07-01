@@ -1,6 +1,7 @@
 package com.monitoreopucp.utilities.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +11,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.R;
 import com.monitoreopucp.entities.Incidencia;
 
+import java.util.List;
+
 public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserIncidenciasHistoryAdapter.UserIncidenciaHistoryViewHolder> {
 
-    private Incidencia[] listaIncidencias;
+    private List<Incidencia> listaIncidencias;
     private Context context;
+    private StorageReference storageReference;
 
-    public UserIncidenciasHistoryAdapter(Incidencia[] listaIncidencias, Context c){
+    public UserIncidenciasHistoryAdapter(List<Incidencia> listaIncidencias, Context c, StorageReference storageReference){
         this.listaIncidencias = listaIncidencias;
         this.context = c;
+        this.storageReference = storageReference;
     }
 
    public static class UserIncidenciaHistoryViewHolder extends RecyclerView.ViewHolder{
@@ -51,25 +59,36 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserIncidenciasHistoryAdapter.UserIncidenciaHistoryViewHolder holder, int position) {
-        Incidencia incidencia = listaIncidencias[position];
+    public void onBindViewHolder(@NonNull UserIncidenciaHistoryViewHolder holder, int position) {
+        Incidencia incidencia = listaIncidencias.get(position);
         holder.textViewSingleUserIncidencia_TitleValue.setText(incidencia.getTitulo());
         holder.textViewSingleUserIncidencia_RegisterDateValue.setText(incidencia.getFechaRegistro().toString());
         holder.textViewSingleUserIncidencia_StatusValue.setText(incidencia.getEstado());
 
-        if(incidencia.getEstado().equals(R.string.Atendido)){
+        getIncidenciaImage(incidencia.getIdFoto() + ".jpg", holder);
+
+        if(incidencia.getEstado().equals("Atendido")){
             holder.textViewSingleUserIncidencia_CheckDateValue.setText(incidencia.getFechaRevision().toString());
         }
         else{
             holder.textViewSingleUserIncidenciaCheckDate.setVisibility(View.GONE);
             holder.textViewSingleUserIncidencia_CheckDateValue.setVisibility(View.GONE);
         }
+    }
 
-        //FALTA LO DE LA IMAGEN
+    public void getIncidenciaImage(final String photoName, final UserIncidenciaHistoryViewHolder holder){
+        storageReference.child(photoName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri)
+                        .into(holder.imageViewSingleUserIncidencia);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return listaIncidencias.length;
+        return listaIncidencias.size();
     }
 }
