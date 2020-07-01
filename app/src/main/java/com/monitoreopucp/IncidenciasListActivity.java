@@ -50,6 +50,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import static com.monitoreopucp.utilities.Util.DISTANCIA_MAXIMA_PARA_FILTROS;
+import static com.monitoreopucp.utilities.Util.getDistanceBetweenTwoPoints;
+
 public class IncidenciasListActivity extends AppCompatActivity implements DataListener {
 
     private Usuario currentUser;
@@ -108,6 +111,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencias_list);
+        currentLocation = new Location("gps");
 
         Intent intent = getIntent();
 
@@ -162,28 +166,14 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
     }
 
     private void readIncidenciasDB() {
-        db.collection("incidencias").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    setCollectionIncidencias(task.getResult());
-                } else {
-                }
-            }
-        });
+        getLocation();
     }
 
     //ASK FOR LOCATION
 
     private boolean checkLocationPermission() {
-
-        if (ContextCompat.checkSelfPermission(IncidenciasListActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return (ContextCompat.checkSelfPermission(IncidenciasListActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED);
     }
 
     private void askLocationPermission() {
@@ -191,20 +181,49 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 , new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
     }
 
-    private void getLocation() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 44) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
+
+    private void getLocation() {
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(IncidenciasListActivity.this);
 
         if (checkLocationPermission()){
             fusedLocationClient.getLastLocation().addOnSuccessListener(IncidenciasListActivity.this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    String mensaje = "";
                     if (location != null) {
-                        mensaje = "Se obtuvo ubicacion actual";
+                        Toast.makeText(IncidenciasListActivity.this, "Ubicación: " + location.getLatitude() + ", " +
+                                location.getLongitude(), Toast.LENGTH_SHORT).show();
+
+                        currentLocation.setLatitude(location.getLatitude());
+                        currentLocation.setLongitude(location.getLongitude());
+
+                        db.collection("incidencias")
+                                .whereEqualTo("estado", "Por atender")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    setCollectionIncidencias(task.getResult());
+                                }
+                            }
+                        });
                     }
                 }
+
             });
+        }
+        else{
+            askLocationPermission();
         }
 
     }
@@ -212,9 +231,12 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
     //CALCULAR DISTANCIA
     private boolean isNearLocation(GeoPoint geoPoint) {
 
+        return(getDistanceBetweenTwoPoints(currentLocation.getLatitude(), currentLocation.getLongitude(),
+                geoPoint.getLatitude(), geoPoint.getLongitude()) < DISTANCIA_MAXIMA_PARA_FILTROS);
+
         //double lat1 = currentLocation.getLatitude();
-        //double lon1 = currentLocation.getLongitude();
-        double lat1 = -12.4708646;
+       //double lon1 = currentLocation.getLongitude();
+        /*double lat1 = -12.4708646;
         double lon1 = -77.4790065;
         double lat2 = geoPoint.getLatitude();
         double lon2 = geoPoint.getLongitude();
@@ -223,16 +245,16 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         distance = Math.acos(distance);
         distance = rad2deg(distance);
         distance = distance*60*1.1515*1.60934;
-        return (distance < MAX_DISTANCE);
+        return (distance < MAX_DISTANCE);*/
     }
 
-    private double deg2rad(double deg) {
+    /*private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
     private double rad2deg(double rad) {
         return (rad *180.0 / Math.PI);
-    }
+    }*/
 
     //DOWNLOAD IMAGES
     private void downloadImage(String imageName){
