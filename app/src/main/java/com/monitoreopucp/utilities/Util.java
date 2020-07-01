@@ -9,7 +9,7 @@ import android.os.Build;
 
 public class Util {
 
-    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.02; //0.02km = 20m
+    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.5; //500m
 
     public static boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
