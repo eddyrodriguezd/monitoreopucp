@@ -48,6 +48,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    private String userUID;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -66,6 +67,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(IncidenciaSeleccionada.this, AgregarAnotacionActivity.class);
                 intent.putExtra("titulo incidencia", itemSelected.getTitulo());
+                intent.putExtra("userUID", userUID);
 
                 int requestCode_AgregarAnotacion = 2;
                 startActivityForResult(intent, requestCode_AgregarAnotacion);
@@ -108,6 +110,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     public void receiveItem() {
         Intent intent = getIntent();
         itemSelected = (Incidencia) intent.getSerializableExtra("item");
+        userUID = intent.getStringExtra("userUID");
     }
 
     public void loadAnotaciones() {

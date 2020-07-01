@@ -61,6 +61,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
 
     //Login
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    private String userUID;
     //FireStore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentSnapshot documentIncidencia;
@@ -105,6 +106,9 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencias_list);
 
+        Intent intent = getIntent();
+        userUID = intent.getStringExtra("userUID");
+
         bootActionBar();
         anonymousLogin();
         readIncidenciasDB();
@@ -141,6 +145,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 Intent intent;
                 intent = new Intent(IncidenciasListActivity.this, IncidenciaSeleccionada.class);
                 intent.putExtra("item", selectedIncidencia);
+                intent.putExtra("userUID", userUID);
 
                 int requestCode_IncidenciaSeleccionada = 1;
                 startActivityForResult(intent, requestCode_IncidenciaSeleccionada);
