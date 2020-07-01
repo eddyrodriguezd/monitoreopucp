@@ -7,6 +7,12 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import io.opencensus.internal.StringUtils;
+
 public class Util {
 
     public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.5; //500m
@@ -55,6 +61,12 @@ public class Util {
         double y = (lat2 - lat1);
         return Math.sqrt(x * x + y * y) * R;
     }*/
+
+    public static String formatDate(Date date){
+        String name = new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("es", "PE")).format(date);
+        String s1 = name.substring(0, 1).toUpperCase();
+        return s1 + name.substring(1);
+    }
 
     public static double getDistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;

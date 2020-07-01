@@ -30,6 +30,7 @@ import com.monitoreopucp.entities.Usuario;
 import java.util.List;
 import java.util.Map;
 
+import static com.monitoreopucp.utilities.Util.formatDate;
 import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 
 public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIncidenciasHistoryAdapter.InfraIncidenciaHistoryViewHolder> {
@@ -84,13 +85,13 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
 
         holder.textViewSingleInfraIncidencia_UserValue.setText(incidencia.getUsuario().get("nombre"));
 
-        holder.textViewSingleInfraIncidencia_RegisterDateValue.setText(incidencia.getFechaRegistro().toString());
+        holder.textViewSingleInfraIncidencia_RegisterDateValue.setText(formatDate(incidencia.getFechaRegistro()));
         holder.textViewSingleInfraIncidencia_StatusValue.setText(incidencia.getEstado());
 
         getIncidenciaImage(incidencia.getIdFoto() + ".jpg", holder);
 
         if(incidencia.getFechaRevision()!= null){
-            holder.textViewSingleInfraIncidencia_CheckDateValue.setText(incidencia.getFechaRevision().toString());
+            holder.textViewSingleInfraIncidencia_CheckDateValue.setText(formatDate(incidencia.getFechaRevision()));
         }
         else{
             holder.textViewSingleInfraIncidencia_CheckDate.setVisibility(View.GONE);
