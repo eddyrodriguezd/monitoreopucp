@@ -94,6 +94,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
             case R.id.menuItem_NuevaIncidencia:
                 Intent intent2;
                 intent2 = new Intent(IncidenciasListActivity.this, IncidenciaFormulario.class);
+                intent2.putExtra("currentUser", currentUser);
                 intent2.putExtra("caso", 1);
                 int requestCode_CrearIncidencia = 1;
                 startActivityForResult(intent2, requestCode_CrearIncidencia);
@@ -114,7 +115,6 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         currentLocation = new Location("gps");
 
         Intent intent = getIntent();
-
         currentUser = (Usuario) intent.getSerializableExtra("currentUser");
         if (currentUser != null) {
             userUID = currentUser.getId();
@@ -200,9 +200,6 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        Toast.makeText(IncidenciasListActivity.this, "Ubicación: " + location.getLatitude() + ", " +
-                                location.getLongitude(), Toast.LENGTH_SHORT).show();
-
                         currentLocation.setLatitude(location.getLatitude());
                         currentLocation.setLongitude(location.getLongitude());
 
