@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Monitoreo Incidencias PUCP</string>
 
-    <string name="UserIncidenciasHistory">Mis incidencias</string>
+    <string name="UserIncidenciasHistory">Tus Incidencias Reportadas</string>
     <string name="InfraIncidenciasHistory">Histórico de incidencias</string>
 
     <string name="Incidencia_TitleValue">#Título de la incidencia#</string>
@@ -37,6 +37,14 @@
     <string name="title_incidencias_cercanas">Incidenicias Cercanas</string>
     <string name="title_incidencia_formulario">Formulario de Incidencia</string>
     <string name="titel_incidencia_seleccionada">Incidencia Seleccionada</string>
+    <string name="sin_resolver_mis_incidencias">Sin Resolver</string>
+    <string name="mis_incidencias_ver_historico">Ver Historico</string>
+    <string name="historial_user_atendidos">Historial (atendidos)</string>
+    <string name="historial_user_titulo">Historial de Reportes</string>
+    <string name="UserIncidencias_titulo">Tus Incidencias Reportadas</string>
+    <string name="Nueva_Anotacion_Titulo">Anotacion: </string>
+    <string name="Nueva_Anotacion_Text_Hint">Escriba aqui su anotacion</string>
+    <string name="Nueva_Anotacion_Incidencia">Incidencia: \n</string>
 
 
 </resources>

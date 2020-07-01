@@ -9,13 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.monitoreopucp.R;
 import com.monitoreopucp.entities.Anotacion;
+import com.monitoreopucp.entities.Usuario;
 
 public class AnotacionAdapter extends RecyclerView.Adapter<AnotacionAdapter.AnotacionViewHolder> {
 
     private Anotacion[] data;
     private Context context;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public AnotacionAdapter(Anotacion[] data, Context context) {
         this.data = data;
@@ -46,18 +53,37 @@ public class AnotacionAdapter extends RecyclerView.Adapter<AnotacionAdapter.Anot
     }
 
     @Override
-    public void onBindViewHolder(AnotacionViewHolder holder, int position) {
-        String titulo = String.valueOf(data[position].getIdUsuario());
-        String cuerpo = String.valueOf(data[position].getContenido());
+    public void onBindViewHolder(final AnotacionViewHolder holder, int position) {
+        final Anotacion[] anotacion = {data[position]};
+        final String[] titulo = new String[1];
+        String cuerpo;
 
-        holder.textTitulo.setText(titulo);
-        holder.textCuerpo.setText(cuerpo);
+        db.collection("usuarios").document(anotacion[0].getIdUsuario()).
+                get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    titulo[0] = (String) document.getData().get("nombre");
+                    writeOnHolder(holder,titulo[0],anotacion[0]);
+                }
+                else {
+                    titulo[0] = anotacion[0].getIdUsuario();
+                    writeOnHolder(holder,titulo[0],anotacion[0]);
+                }
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
         return data.length;
+    }
+
+    public void writeOnHolder(AnotacionViewHolder holder, String title, Anotacion anotacion){
+        holder.textTitulo.setText(title);
+        holder.textCuerpo.setText(anotacion.getContenido());
     }
 
 }

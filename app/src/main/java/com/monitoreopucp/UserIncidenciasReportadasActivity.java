@@ -1,14 +1,15 @@
 package com.monitoreopucp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -25,52 +26,76 @@ import java.util.Map;
 
 import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 
-public class UserIncidenciasHistoryActivity extends AppCompatActivity {
+public class UserIncidenciasReportadasActivity extends AppCompatActivity {
+
+    private Button ButtonVerHistorico, ButtonRefresh,ButtonAddIncidencia;
+    private static final int History_Request_Code = 1;
+    private static final int IncidenciasListActivityRequestCode = 2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_incidencias_history);
+        setContentView(R.layout.activity_user_tus_incidencias_reportadas);
+
+        ButtonVerHistorico = findViewById(R.id.verHistorico);
+        ButtonRefresh = findViewById(R.id.buttonRefresh);
+        ButtonAddIncidencia = findViewById(R.id.buttonAdd);
+
+
+
 
         Intent intent = getIntent();
         int userId = intent.getIntExtra("userId", -1);
         Log.i("sebastian","ID DEL USUARIO LOGEADO: "+ userId );
         if(userId != -1){
-            getUserIncidenciasHistory(userId);
+            getUserIncidenciasSinResolver(userId);
         }
         else{
-            Toast.makeText(UserIncidenciasHistoryActivity.this, "Usuario no detectado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserIncidenciasReportadasActivity.this, "Usuario no detectado", Toast.LENGTH_SHORT).show();
         }
 
-
-        findViewById(R.id.buttonBack_UserHistory).setOnClickListener(new View.OnClickListener() {
+        //Ver Historial
+        ButtonVerHistorico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(UserIncidenciasReportadasActivity.this, UserIncidenciasHistoryActivity.class);
+                startActivityForResult(intent, History_Request_Code);
+            }
+        });
+        //Anadir Incidencia
+        ButtonAddIncidencia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserIncidenciasReportadasActivity.this, IncidenciasListActivity.class);
+                startActivityForResult(intent, IncidenciasListActivityRequestCode);
             }
         });
 
 
+
+
+
     }
 
-    private void getUserIncidenciasHistory(int userId){
+    private void getUserIncidenciasSinResolver(int userId){
 
         if (isInternetAvailable(this)) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             //FALTA AÑADIR URL
-            String url = "" + "?id=" + userId + "&estado=" + R.string.Atendido;
+            String url = "" + "?id=" + userId + "&estado=" + R.string.NoAtendido;
             StringRequest stringRequest = new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     DtoIncidencias dtoIncidencias = gson.fromJson(response, DtoIncidencias.class);
                     final Incidencia[] listaIncidencias = dtoIncidencias.getLista();
-
-                    UserIncidenciasHistoryAdapter listaIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaIncidencias, UserIncidenciasHistoryActivity.this);
-                    RecyclerView recyclerView = findViewById(R.id.recyclerView_UserHistory);
+                    UserIncidenciasHistoryAdapter listaIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaIncidencias, UserIncidenciasReportadasActivity.this);
+                    RecyclerView recyclerView = findViewById(R.id.recyclerView_UserIncidenciasSinResolver);
                     recyclerView.setAdapter(listaIncidenciasAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasHistoryActivity.this));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasReportadasActivity.this));
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -88,6 +113,4 @@ public class UserIncidenciasHistoryActivity extends AppCompatActivity {
             requestQueue.add(stringRequest);
         }
     }
-
-
 }

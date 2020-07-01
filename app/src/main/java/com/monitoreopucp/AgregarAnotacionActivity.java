@@ -26,26 +26,25 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_anotacion);
 
-        recieveData();
-
-    }
-
-    public void recieveData() {
-        Intent intent = getIntent();
-        String tituloIncidencia = intent.getStringExtra("titulo incidencia");
-    }
-
-    public void prepareForm() {
         mTextView_TituloIncidencia = findViewById(R.id.textViewTituloincidencia_AgregarAnotacion);
         mEditText_Anotacion = findViewById(R.id.inputNuevaAnotacion);
         mButton_Aceptar = findViewById(R.id.buttonAceptar_NuevaAnotacion);
         mButton_Cancelar = findViewById(R.id.buttonCancelar_NuevaAnotacion);
 
+        mTextView_TituloIncidencia.append(receiveData());
+
+        mButton_Cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         mButton_Aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String cuerpo_anotacion = mEditText_Anotacion.getText().toString();
-                NuevaAnotacion = new Anotacion(1231, cuerpo_anotacion);
+                NuevaAnotacion = new Anotacion("1231", cuerpo_anotacion);
 
                 Intent intent = new Intent();
                 intent.putExtra("nueva anotacion", NuevaAnotacion);
@@ -55,17 +54,20 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
             }
         });
 
-        mButton_Cancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
 
 
     }
+
+    public String receiveData() {
+        Intent intent = getIntent();
+        String tituloIncidencia = "error: incidencia no encontrada";
+        if(intent.getStringExtra("titulo incidencia") != null){
+            tituloIncidencia = intent.getStringExtra("titulo incidencia");
+        }
+        return tituloIncidencia;
+    }
+
+
 
 
 }

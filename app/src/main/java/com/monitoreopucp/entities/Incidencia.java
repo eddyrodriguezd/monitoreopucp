@@ -1,13 +1,18 @@
 package com.monitoreopucp.entities;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Incidencia implements Serializable {
-    private int id;
+    private Map<String, String> usuario;
+    private String id;
     private int idUsuario;
-    private int idFoto;
+    private String idFoto;//era int y lo cambie a String (JA)
     private String titulo;
     private String descripcion;
     private double latitud;
@@ -18,9 +23,11 @@ public class Incidencia implements Serializable {
     private String estado;
 
     public Incidencia() {
+        this.anotaciones = new ArrayList<>();
+        this.fechaRevision = null;
     }
 
-    public Incidencia(int id, int idUsuario, int idFoto, String titulo, String descripcion,
+    public Incidencia(String id, int idUsuario, String idFoto, String titulo, String descripcion,
                       double latitud, double longitud, List<Anotacion> anotaciones, Date fechaRegistro,
                       Date fechaRevision, String estado) {
         this.id = id;
@@ -36,27 +43,27 @@ public class Incidencia implements Serializable {
         this.estado = estado;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public Map<String, String> getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Map<String, String> usuario) {
+        this.usuario = usuario;
     }
 
-    public int getIdFoto() {
+    public String getIdFoto() {
         return idFoto;
     }
 
-    public void setIdFoto(int idFoto) {
+    public void setIdFoto(String idFoto) {
         this.idFoto = idFoto;
     }
 
@@ -122,5 +129,10 @@ public class Incidencia implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public void setUbicacion (GeoPoint ubicacion){
+        this.latitud = ubicacion.getLatitude();
+        this.longitud = ubicacion.getLongitude();
     }
 }

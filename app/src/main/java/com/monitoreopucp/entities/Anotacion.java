@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 public class Anotacion implements Serializable {
 
-    private int idUsuario;
+    private String idUsuario;
     private String contenido;
 
     public Anotacion(){
 
     }
 
-    public Anotacion(int idUsuario, String contenido) {
+    public Anotacion(String idUsuario, String contenido) {
         this.idUsuario = idUsuario;
         this.contenido = contenido;
     }
 
-    public int getIdUsuario() {
+    public String getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 
