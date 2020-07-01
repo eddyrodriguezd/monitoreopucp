@@ -25,7 +25,7 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
     private Context context;
     private StorageReference storageReference;
 
-    public UserIncidenciasHistoryAdapter(List<Incidencia>  listaIncidencias, Context c, StorageReference storageReference){
+    public UserIncidenciasHistoryAdapter(List<Incidencia> listaIncidencias, Context c, StorageReference storageReference){
         this.listaIncidencias = listaIncidencias;
         this.context = c;
         this.storageReference = storageReference;
@@ -67,7 +67,7 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
 
         getIncidenciaImage(incidencia.getIdFoto() + ".jpg", holder);
 
-        if(incidencia.getEstado().equals(R.string.Atendido)){
+        if(incidencia.getEstado().equals("Atendido")){
             holder.textViewSingleUserIncidencia_CheckDateValue.setText(incidencia.getFechaRevision().toString());
         }
         else{

@@ -51,6 +51,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
     private static final int IncidenciasListActivityRequestCode = 2;
 
     private Usuario currentUser;
+    private String userId = "";
     private List<Incidencia> listaIncidenciasSinResolver;
     private RecyclerView recyclerView;
 
@@ -65,17 +66,13 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
         listaIncidenciasSinResolver = new ArrayList<>();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance();
-
-        ButtonVerHistorico = findViewById(R.id.verHistorico);
-        ButtonRefresh = findViewById(R.id.buttonRefresh);
-        ButtonAddIncidencia = findViewById(R.id.buttonAdd);
         recyclerView = findViewById(R.id.recyclerView_UserIncidenciasSinResolver);
 
         Intent intent = getIntent();
         currentUser = (Usuario) intent.getSerializableExtra("currentUser");
 
         if (currentUser != null){
-            String userId = currentUser.getId();
+            userId = currentUser.getId();
 
             if(!userId.equals("")){
                 refreshView(userId);
@@ -85,21 +82,31 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
             }
         }
 
-
         //Ver Historial
-        ButtonVerHistorico.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.verHistorico).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserIncidenciasReportadasActivity.this, UserIncidenciasHistoryActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivityForResult(intent, History_Request_Code);
             }
         });
         //Anadir Incidencia
-        ButtonAddIncidencia.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserIncidenciasReportadasActivity.this, IncidenciasListActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivityForResult(intent, IncidenciasListActivityRequestCode);
+            }
+        });
+        //Actualizar RV
+        findViewById(R.id.buttonRefresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!userId.equals("")){
+                    refreshView(userId);
+                }
             }
         });
 

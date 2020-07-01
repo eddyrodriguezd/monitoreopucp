@@ -39,6 +39,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.entities.Incidencia;
+import com.monitoreopucp.entities.Usuario;
 import com.monitoreopucp.utilities.DataListener;
 import com.monitoreopucp.utilities.adapters.IncidenciasAdapter;
 
@@ -50,6 +51,8 @@ import java.util.ListIterator;
 import java.util.Map;
 
 public class IncidenciasListActivity extends AppCompatActivity implements DataListener {
+
+    private Usuario currentUser;
 
     //Variables
     private RecyclerView mRecyclerView;
@@ -107,7 +110,11 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         setContentView(R.layout.activity_incidencias_list);
 
         Intent intent = getIntent();
-        userUID = intent.getStringExtra("userUID");
+
+        currentUser = (Usuario) intent.getSerializableExtra("currentUser");
+        if (currentUser != null) {
+            userUID = currentUser.getId();
+        }
 
         bootActionBar();
         anonymousLogin();
