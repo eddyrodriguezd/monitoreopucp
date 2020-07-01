@@ -278,10 +278,10 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                             if (location != null){
                                 Log.d("infoLocation", "Selected: " + location.latitude + ", " + location.longitude);
                                 Log.d("infoLocation", "Incidencia: " + incidencia.getLatitud() + ", " + incidencia.getLongitud());
-                                if(getDistanceBetweenTwoPoints(location.latitude, incidencia.getLatitud(),
-                                        location.longitude, incidencia.getLongitud()) > DISTANCIA_MAXIMA_PARA_FILTROS)
-                                    Log.d("infoLocation", "distance:" + getDistanceBetweenTwoPoints(location.latitude, incidencia.getLatitud(),
-                                            location.longitude, incidencia.getLongitud()));
+                                Log.d("infoLocation", "distance:" + getDistanceBetweenTwoPoints(location.latitude, location.longitude,
+                                        incidencia.getLatitud(), incidencia.getLongitud()));
+                                if(getDistanceBetweenTwoPoints(location.latitude, location.longitude,
+                                        incidencia.getLatitud(), incidencia.getLongitud()) > DISTANCIA_MAXIMA_PARA_FILTROS)
                                     continue;
                             }
                             listaIncidencias.add(incidencia);

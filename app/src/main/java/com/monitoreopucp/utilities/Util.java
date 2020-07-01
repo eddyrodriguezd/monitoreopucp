@@ -9,7 +9,7 @@ import android.os.Build;
 
 public class Util {
 
-    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.02; //0.02km = 20m
+    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.5; //500m
 
     public static boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -56,7 +56,7 @@ public class Util {
         return Math.sqrt(x * x + y * y) * R;
     }*/
 
-    private static double getDistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2) {
+    public static double getDistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1))
                 * Math.sin(deg2rad(lat2))
