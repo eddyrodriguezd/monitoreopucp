@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterUser"></activity>
+        <activity android:name=".ReportesActivity"/>
+        <activity android:name=".RecuperarCuenta" />
+        <activity android:name=".RegisterUser" />
         <activity android:name=".IncidenciaFormulario" />
         <activity
             android:name=".IncidenciaSeleccionada"
@@ -33,7 +35,7 @@
             android:name=".MapFilterActivity"
             android:label="@string/title_activity_map_filter" />
         <activity android:name=".FilterActivity" />
-        <activity android:name=".InfraIncidenciasHistoryActivity"></activity>
+        <activity android:name=".InfraIncidenciasHistoryActivity" />
         <activity android:name=".UserIncidenciasReportadasActivity">
 
             <!--
@@ -45,19 +47,17 @@
             -->
         </activity>
         <activity android:name=".UserIncidenciasHistoryActivity" />
-        <activity
-            android:name=".IncidenciasListActivity"
-            android:label="@string/title_incidencias_cercanas">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".IncidenciasListActivity"/>
         <activity
             android:name=".AgregarAnotacionActivity"
             android:label="@string/nueva_anotacion_title" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".MainActivity">
 
             <!--
