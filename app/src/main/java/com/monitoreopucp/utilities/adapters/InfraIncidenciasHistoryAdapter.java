@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -27,10 +28,13 @@ import com.monitoreopucp.R;
 import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.entities.Usuario;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import static com.monitoreopucp.utilities.Util.formatDate;
+import static com.monitoreopucp.utilities.Util.get00Time;
 import static com.monitoreopucp.utilities.Util.isInternetAvailable;
 
 public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIncidenciasHistoryAdapter.InfraIncidenciaHistoryViewHolder> {
@@ -45,7 +49,7 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
     }
 
     public static class InfraIncidenciaHistoryViewHolder extends RecyclerView.ViewHolder {
-
+        private ConstraintLayout singleInfraIncidencia_ConstraintLayout;
         private TextView textViewSingleInfraIncidencia_TitleValue;
         private TextView textViewSingleInfraIncidencia_UserValue;
         private TextView textViewSingleInfraIncidencia_RegisterDateValue;
@@ -58,6 +62,7 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
 
         public InfraIncidenciaHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
+            singleInfraIncidencia_ConstraintLayout = itemView.findViewById(R.id.singleInfraIncidencia_ConstraintLayout);
             textViewSingleInfraIncidencia_TitleValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_TitleValue);
             textViewSingleInfraIncidencia_UserValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_UserValue);
             textViewSingleInfraIncidencia_RegisterDateValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_RegisterDateValue);
@@ -85,7 +90,24 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
 
         holder.textViewSingleInfraIncidencia_UserValue.setText(incidencia.getUsuario().get("nombre"));
 
-        holder.textViewSingleInfraIncidencia_RegisterDateValue.setText(formatDate(incidencia.getFechaRegistro()));
+        Date fechaRegistro = incidencia.getFechaRegistro();
+        holder.textViewSingleInfraIncidencia_RegisterDateValue.setText(formatDate(fechaRegistro));
+
+        Date initialDateTime = get00Time(Calendar.getInstance().getTime(),0);
+        Date endDateTime = get00Time(Calendar.getInstance().getTime(),1);
+        Log.d("InfoFecha", "inicio: " + initialDateTime.toString());
+        Log.d("InfoFecha", "fin: " + endDateTime.toString());
+        Log.d("InfoFecha", "fechaRegistro: " + fechaRegistro.toString());
+
+        if( initialDateTime.equals(fechaRegistro) ||
+                (initialDateTime.before(fechaRegistro) && endDateTime.after(fechaRegistro)) ){
+            Log.d("InfoFecha", "ENTRÓ Titulo:" + incidencia.getTitulo());
+            holder.singleInfraIncidencia_ConstraintLayout.setBackgroundColor(0xFFF6E684);
+        }
+        else{
+            holder.singleInfraIncidencia_ConstraintLayout.setBackgroundColor(0xFFFFFFFF);
+        }
+
         holder.textViewSingleInfraIncidencia_StatusValue.setText(incidencia.getEstado());
 
         getIncidenciaImage(incidencia.getIdFoto() + ".jpg", holder);

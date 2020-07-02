@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -66,6 +67,19 @@ public class Util {
         String name = new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("es", "PE")).format(date);
         String s1 = name.substring(0, 1).toUpperCase();
         return s1 + name.substring(1);
+    }
+
+    public static Date get00Time(Date date, int addDays){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        if(addDays>0){
+            cal.add(Calendar.DATE, addDays);
+        }
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public static double getDistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2) {
