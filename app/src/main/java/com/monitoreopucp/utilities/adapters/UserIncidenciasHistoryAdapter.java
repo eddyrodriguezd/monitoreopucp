@@ -17,7 +17,10 @@ import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.R;
 import com.monitoreopucp.entities.Incidencia;
 
+import java.util.Date;
 import java.util.List;
+
+import static com.monitoreopucp.utilities.Util.formatDate;
 
 public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserIncidenciasHistoryAdapter.UserIncidenciaHistoryViewHolder> {
 
@@ -85,13 +88,13 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
     public void onBindViewHolder(@NonNull UserIncidenciaHistoryViewHolder holder, int position) {
         Incidencia incidencia = listaIncidencias.get(position);
         holder.textViewSingleUserIncidencia_TitleValue.setText(incidencia.getTitulo());
-        holder.textViewSingleUserIncidencia_RegisterDateValue.setText(incidencia.getFechaRegistro().toString());
+        holder.textViewSingleUserIncidencia_RegisterDateValue.setText(formatDate(incidencia.getFechaRegistro()));
         holder.textViewSingleUserIncidencia_StatusValue.setText(incidencia.getEstado());
 
         getIncidenciaImage(incidencia.getIdFoto() + ".jpg", holder);
 
         if(incidencia.getEstado().equals("Atendido")){
-            holder.textViewSingleUserIncidencia_CheckDateValue.setText(incidencia.getFechaRevision().toString());
+            holder.textViewSingleUserIncidencia_CheckDateValue.setText(formatDate(incidencia.getFechaRevision()));
         }
         else{
             holder.textViewSingleUserIncidenciaCheckDate.setVisibility(View.GONE);

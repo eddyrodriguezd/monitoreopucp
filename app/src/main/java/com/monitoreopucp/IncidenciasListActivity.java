@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -112,6 +113,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencias_list);
+        setTitle("Incidencias cercanas");
         currentLocation = new Location("gps");
 
         Intent intent = getIntent();
@@ -142,7 +144,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
 
     public void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyclerViewIncidenciasList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(IncidenciasListActivity.this));
+        mRecyclerView.setLayoutManager(/*new LinearLayoutManager(IncidenciasListActivity.this)*/new GridLayoutManager(this, 2));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new IncidenciasAdapter(mLista, mImages, IncidenciasListActivity.this);
         mRecyclerView.setAdapter(mAdapter);
