@@ -156,7 +156,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 Intent intent;
                 intent = new Intent(IncidenciasListActivity.this, IncidenciaSeleccionada.class);
                 intent.putExtra("item", selectedIncidencia);
-                intent.putExtra("userUID", userUID);
+                intent.putExtra("caso", 2);
 
                 int requestCode_IncidenciaSeleccionada = 1;
                 startActivityForResult(intent, requestCode_IncidenciaSeleccionada);

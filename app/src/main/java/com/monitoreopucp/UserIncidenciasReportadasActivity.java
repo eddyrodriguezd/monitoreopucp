@@ -49,6 +49,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
     private Button ButtonVerHistorico, ButtonRefresh,ButtonAddIncidencia;
     private static final int History_Request_Code = 1;
     private static final int IncidenciasListActivityRequestCode = 2;
+    private static final int EditarIncidencia_RequestCode = 3;
 
     private Usuario currentUser;
     private String userId = "";
@@ -113,12 +114,26 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
 
     }
 
-    public void refreshView(String userId){
+    public void refreshView(final String userId){
         getUserIncidenciasSinResolver(userId, new FirebaseCallback() {
             @Override
             public void onSuccess() {
                 UserIncidenciasHistoryAdapter listaIncidenciasAdapter = new UserIncidenciasHistoryAdapter(listaIncidenciasSinResolver,
                         UserIncidenciasReportadasActivity.this, fStorage.getReference());
+                listaIncidenciasAdapter.setOnItemClickListener(new UserIncidenciasHistoryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Incidencia selectedIncidencia = listaIncidenciasSinResolver.get(position);
+
+                        Intent intent;
+                        intent = new Intent(UserIncidenciasReportadasActivity.this, IncidenciaSeleccionada.class);
+                        intent.putExtra("item", selectedIncidencia);
+                        intent.putExtra("userUID", userId);
+                        intent.putExtra("currentUser", currentUser);
+
+                        startActivityForResult(intent, EditarIncidencia_RequestCode);
+                    }
+                });
                 recyclerView.setAdapter(listaIncidenciasAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasReportadasActivity.this));
             }

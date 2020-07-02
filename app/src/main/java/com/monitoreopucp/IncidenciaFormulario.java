@@ -145,6 +145,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
         else {
             tituloActv  = "Editar Incidencia";
             mItem = (Incidencia) intent.getSerializableExtra("item");
+            currentUser = (Usuario) intent.getSerializableExtra("currentUser");
             fillFields(mItem);
         }
 
