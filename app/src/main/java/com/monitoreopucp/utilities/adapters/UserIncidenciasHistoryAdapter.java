@@ -24,6 +24,16 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
     private List<Incidencia> listaIncidencias;
     private Context context;
     private StorageReference storageReference;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(UserIncidenciasHistoryAdapter.OnItemClickListener listener){
+        this.mListener = listener;
+    }
+
 
     public UserIncidenciasHistoryAdapter(List<Incidencia> listaIncidencias, Context c, StorageReference storageReference){
         this.listaIncidencias = listaIncidencias;
@@ -40,7 +50,7 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
        private TextView textViewSingleUserIncidencia_CheckDateValue;
        private ImageView imageViewSingleUserIncidencia;
 
-       public UserIncidenciaHistoryViewHolder(@NonNull View itemView) {
+       public UserIncidenciaHistoryViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
            super(itemView);
            textViewSingleUserIncidencia_TitleValue = itemView.findViewById(R.id.textViewSingleUserIncidencia_TitleValue);
            textViewSingleUserIncidencia_RegisterDateValue = itemView.findViewById(R.id.textViewSingleUserIncidencia_RegisterDateValue);
@@ -48,6 +58,19 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
            textViewSingleUserIncidenciaCheckDate = itemView.findViewById(R.id.textViewSingleUserIncidenciaCheckDate);
            textViewSingleUserIncidencia_CheckDateValue = itemView.findViewById(R.id.textViewSingleUserIncidencia_CheckDateValue);
            imageViewSingleUserIncidencia = itemView.findViewById(R.id.imageViewSingleUserIncidencia);
+
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   if (listener != null){
+                       int position = getAdapterPosition();
+                       if (position != RecyclerView.NO_POSITION){
+                           listener.onItemClick(position);
+                       }
+                   }
+               }
+           });
+
        }
    }
 
@@ -55,7 +78,7 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
     @Override
     public UserIncidenciaHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.single_incidencia_user_history, parent, false);
-        return new UserIncidenciaHistoryViewHolder(itemView);
+        return new UserIncidenciaHistoryViewHolder(itemView, mListener);
     }
 
     @Override
