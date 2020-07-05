@@ -33,6 +33,7 @@ public class RegisterUser extends AppCompatActivity {
     private String codigo;
     private String password;
 
+    //en esta parte se valida que sea el correo con y sin dominio edu
     final private String[] domainsList = {"@pucp.pe", "@pucp.edu.pe"};
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser mUser;

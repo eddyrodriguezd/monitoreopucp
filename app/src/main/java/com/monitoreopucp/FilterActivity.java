@@ -125,7 +125,7 @@ public class FilterActivity extends AppCompatActivity {
                                 SendDataAndFinishActivity();
                             }
                             else{
-                                Toast.makeText(FilterActivity.this, "Por favor seleccione un rango de fechas válido",
+                                Toast.makeText(FilterActivity.this, "Por favor escoja un rango de fechas válido",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
