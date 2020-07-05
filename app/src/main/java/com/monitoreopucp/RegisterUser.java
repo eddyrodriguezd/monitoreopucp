@@ -33,7 +33,7 @@ public class RegisterUser extends AppCompatActivity {
     private String codigo;
     private String password;
 
-    //en esta parte se valida que sea el correo con y sin dominio edu
+    //en esta parte se valida que el correo con y sin dominio .edu
     final private String[] domainsList = {"@pucp.pe", "@pucp.edu.pe"};
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser mUser;
@@ -44,7 +44,6 @@ public class RegisterUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
-
         setForm();
     }
 
@@ -75,7 +74,6 @@ public class RegisterUser extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private boolean isDataValid(){
@@ -100,7 +98,6 @@ public class RegisterUser extends AppCompatActivity {
                 Toast.makeText(this,"Dirección de correo inválido", Toast.LENGTH_LONG).show();
             }
         }
-
         return false;
     }
 
@@ -115,7 +112,6 @@ public class RegisterUser extends AppCompatActivity {
                 }
             }
         }
-
         return validUser;
     }
 
@@ -131,7 +127,7 @@ public class RegisterUser extends AppCompatActivity {
                         }
                         else {
                             Toast.makeText(RegisterUser.this,
-                                    "Error: no se pudo crear el usuario", Toast.LENGTH_LONG).show();
+                                    "Error: No se pudo crear el usuario", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -144,7 +140,7 @@ public class RegisterUser extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             FirebaseAuth.getInstance().signOut();
-                            Toast.makeText(RegisterUser.this,"Por favor revise la bandeja de entrada" +
+                            Toast.makeText(RegisterUser.this,"Por favor, revise la bandeja de entrada" +
                                     "de su correo: " + correo, Toast.LENGTH_SHORT).show();
                             finish();
                         }
