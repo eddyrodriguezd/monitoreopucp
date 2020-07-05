@@ -50,7 +50,6 @@ public class MapFilterActivity extends FragmentActivity implements OnMapReadyCal
         this.googleMap = googleMap;
         location = new LatLng(-12.069512,-77.0815479);
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18f));
-
         this.googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
