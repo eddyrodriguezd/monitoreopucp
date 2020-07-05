@@ -124,12 +124,13 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(int position) {
                         Incidencia selectedIncidencia = listaIncidenciasSinResolver.get(position);
-
                         Intent intent;
                         intent = new Intent(UserIncidenciasReportadasActivity.this, IncidenciaSeleccionada.class);
                         intent.putExtra("item", selectedIncidencia);
                         intent.putExtra("userUID", userId);
                         intent.putExtra("currentUser", currentUser);
+                        intent.putExtra("caso", 2);
+
 
                         startActivityForResult(intent, EditarIncidencia_RequestCode);
                     }
@@ -153,6 +154,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Incidencia incidencia = document.toObject(Incidencia.class);
+                                incidencia.setId(document.getId());
                                 incidencia.setUbicacion((GeoPoint) Objects.requireNonNull(document.get("ubicacion")));
                                 listaIncidenciasSinResolver.add(incidencia);
                             }
