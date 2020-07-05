@@ -46,9 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_usuario);
 
-        /*editTextMail = findViewById(R.id.editTextMail);
-        editTextPassword = findViewById(R.id.editTextPassword);*/
-
         textInputLayoutMail = findViewById(R.id.editTextMail);
         textInputLayoutPassword = findViewById(R.id.editTextPassword);
 
@@ -82,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "Por favor verifique su correo", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Toast.makeText(LoginActivity.this, "Credenciales erróneas", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

@@ -158,7 +158,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
                             }
                             callback.onSuccess();
                         } else {
-                            Toast.makeText(UserIncidenciasReportadasActivity.this, "Ocurrió un problema", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserIncidenciasReportadasActivity.this, "Ha ocurrido un problema", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

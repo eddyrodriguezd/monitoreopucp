@@ -12,7 +12,7 @@ public class Incidencia implements Serializable {
     private Map<String, String> usuario;
     private String id;
     private int idUsuario;
-    private String idFoto;//era int y lo cambie a String (JA)
+    private String idFoto;//era int y lo cambie a String (GAAA)
     private String titulo;
     private String descripcion;
     private double latitud;

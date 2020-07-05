@@ -80,7 +80,6 @@ public class RegisterUser extends AppCompatActivity {
     private boolean isDataValid(){
 
         boolean emptyForm;
-
         nombre = editNombre.getText().toString();
         apellido = editApellido.getText().toString();
         correo = editCorreo.getText().toString();
@@ -90,7 +89,7 @@ public class RegisterUser extends AppCompatActivity {
         emptyForm = nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || codigo.isEmpty() || password.isEmpty();
 
         if (emptyForm){
-            Toast.makeText(this,"Llene todos los campos", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Rellene todos los campos", Toast.LENGTH_LONG).show();
         }
         else {
             if (isMailValid()){
@@ -131,7 +130,7 @@ public class RegisterUser extends AppCompatActivity {
                         }
                         else {
                             Toast.makeText(RegisterUser.this,
-                                    "Error: no se creo el usuario", Toast.LENGTH_LONG).show();
+                                    "Error: no se pudo crear el usuario", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -154,7 +153,6 @@ public class RegisterUser extends AppCompatActivity {
                             finish();
                             overridePendingTransition(0, 0);
                             startActivity(getIntent());
-
                         }
                     }
                 });

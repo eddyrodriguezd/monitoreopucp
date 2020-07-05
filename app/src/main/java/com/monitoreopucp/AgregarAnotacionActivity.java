@@ -53,11 +53,7 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-
     public String receiveData() {
         Intent intent = getIntent();
         String tituloIncidencia = "error: incidencia no encontrada";
@@ -66,8 +62,4 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
         }
         return tituloIncidencia;
     }
-
-
-
-
 }

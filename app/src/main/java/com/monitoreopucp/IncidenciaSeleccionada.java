@@ -160,7 +160,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                // do your stuff
+                // do your stuff, kha?
             }
         })
                 .addOnFailureListener(this, new OnFailureListener() {
@@ -169,9 +169,6 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
                     }
                 });
     }
-
-
-
 
     //Listener
     public void setAnotaciones(QuerySnapshot result) {

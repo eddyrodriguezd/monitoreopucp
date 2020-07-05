@@ -265,7 +265,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
                         lugar = location;
                     }
                     else {
-                        mensaje = "No se obtuvo la ubicacion";
+                        mensaje = "No se pudo obtener la ubicación";
                     }
                     Toast.makeText(IncidenciaFormulario.this, mensaje,Toast.LENGTH_LONG).show();
                 }
