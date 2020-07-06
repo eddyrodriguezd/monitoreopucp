@@ -64,7 +64,7 @@ public class AnotacionAdapter extends RecyclerView.Adapter<AnotacionAdapter.Anot
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    titulo[0] = (String) document.getData().get("nombre");
+                    titulo[0] = (String) document. getData().get("nombre");
                     writeOnHolder(holder,titulo[0],anotacion[0]);
                 }
                 else {

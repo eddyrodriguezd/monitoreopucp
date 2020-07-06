@@ -2,6 +2,7 @@ package com.monitoreopucp.utilities.adapters;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,7 @@ public class UserIncidenciasHistoryAdapter extends RecyclerView.Adapter<UserInci
 
     @Override
     public void onBindViewHolder(@NonNull UserIncidenciaHistoryViewHolder holder, int position) {
+        Log.i("Sebastian", listaIncidencias.toString());
         Incidencia incidencia = listaIncidencias.get(position);
         holder.textViewSingleUserIncidencia_TitleValue.setText(incidencia.getTitulo());
         holder.textViewSingleUserIncidencia_RegisterDateValue.setText(formatDate(incidencia.getFechaRegistro()));

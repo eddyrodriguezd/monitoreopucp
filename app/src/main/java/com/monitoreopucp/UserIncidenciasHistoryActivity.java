@@ -89,6 +89,7 @@ public class UserIncidenciasHistoryActivity extends AppCompatActivity {
                 recyclerView.setAdapter(listaIncidenciasAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(UserIncidenciasHistoryActivity.this));
             }
+
         });
     }
 
