@@ -67,6 +67,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(IncidenciaSeleccionada.this, AgregarAnotacionActivity.class);
                 intent.putExtra("titulo incidencia", itemSelected.getTitulo());
+                intent.putExtra("incidencia", itemSelected);
                 intent.putExtra("userUID", userUID);
 
                 int requestCode_AgregarAnotacion = 2;
