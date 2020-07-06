@@ -62,7 +62,7 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cuerpo_anotacion = mEditText_Anotacion.getText().toString();
-                nuevaAnotacion = new Anotacion("UID", cuerpo_anotacion);
+                nuevaAnotacion = new Anotacion(UID, cuerpo_anotacion);
                 if (!nuevaAnotacion.getContenido().isEmpty()) {
 
                     upload(nuevaAnotacion, incidencia);
