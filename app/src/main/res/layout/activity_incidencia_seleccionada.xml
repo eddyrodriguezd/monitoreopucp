@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     tools:context=".IncidenciaSeleccionada">
 
     <LinearLayout
@@ -53,7 +54,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAnotaciones_IncidenciaSeleccionada"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/boton_rounded_border2"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
