@@ -87,6 +87,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginBottom="144dp"
         android:text="Solicitar"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -96,6 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="144dp"
         android:text="Regresar"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
