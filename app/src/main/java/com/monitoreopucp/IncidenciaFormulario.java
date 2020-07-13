@@ -73,7 +73,12 @@ public class IncidenciaFormulario extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private Location lugar = null;
     private GeoPoint geoPoint;
+    //Flags
     private boolean locationFromMap = false;
+    private boolean locationObtained = false;
+    private boolean imageObtained = false;
+    private boolean fieldsComplete = false;
+    //
     private int CASE = 1;
     private String incidenciaUID;
 
@@ -176,7 +181,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
         mButton_Aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadInfo();
+                checkAllFields();
             }
         });
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -222,10 +227,12 @@ public class IncidenciaFormulario extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_IMAGE_CAPTURE:
+                    imageObtained = true;
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     mImageView.setImageBitmap(imageBitmap);
                 case GALLERY_REQUEST_CODE:
+                    imageObtained = true;
                     Uri selectedImage = data.getData();
                     mImageView.setImageURI(selectedImage);
                 case MAP_FILTER_REQUEST_CODE:
@@ -234,6 +241,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
                         double longitude = data.getDoubleExtra("longitude", 0);
                         geoPoint = new GeoPoint(latitude, longitude);
                         locationFromMap = true;
+                        locationObtained = true;
                     }
             }
         }
@@ -273,6 +281,8 @@ public class IncidenciaFormulario extends AppCompatActivity {
                     if (location != null) {
                         mensaje = "Ubicación capturada";
                         lugar = location;
+                        locationFromMap = false;
+                        locationObtained = true;
                     }
                     else {
                         mensaje = "No se pudo obtener la ubicación";
@@ -285,10 +295,35 @@ public class IncidenciaFormulario extends AppCompatActivity {
     }
 
     public void onCheckboxClicked(View view) {
-        getLocation();
+
+        if(mCheckBox.isChecked()){
+            getLocation();
+        }
     }
 
     //Firebase Actions
+    private void checkAllFields () {
+
+        fieldsComplete = (!mTextview_Cuerpo.getText().toString().isEmpty())&&(!mTextView_Titulo.getText().toString().isEmpty());
+
+        if (fieldsComplete){
+            Toast.makeText(this, "Llene todos los campos",Toast.LENGTH_LONG).show();
+        }
+        else {
+            if (imageObtained){
+                if (locationObtained){
+                    uploadInfo();
+                }
+                else {
+                    Toast.makeText(this, "Indique la ubicación",Toast.LENGTH_LONG).show();
+                }
+            }
+            else {
+                Toast.makeText(this, "Seleccione una imagen",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     private void uploadImage(final String idFoto){
         storageRef = storage.getReference();
         mountainsRef = storageRef.child(idFoto + ".jpg");
