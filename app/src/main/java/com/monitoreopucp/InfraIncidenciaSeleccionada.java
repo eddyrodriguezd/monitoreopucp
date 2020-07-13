@@ -11,8 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,6 +88,12 @@ public class InfraIncidenciaSeleccionada extends AppCompatActivity {
         receiveItem();
         fillFields();
         loadAnotaciones();
+
+        final Button botonMarcarResuelto = (Button) findViewById(R.id.buttonMarcarResuelto);
+        if(itemSelected.getEstado().equalsIgnoreCase("Atendido")) {
+            botonMarcarResuelto.setText("Marcar como no resuelto");
+        }
+
         findViewById(R.id.ButtonBack_InfraIncidencia).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,11 +101,44 @@ public class InfraIncidenciaSeleccionada extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.buttonMarcarResuelto).setOnClickListener(new View.OnClickListener(){
+        botonMarcarResuelto.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 //todo hacer que se marque como resuelto
+                if(!itemSelected.getEstado().equalsIgnoreCase("Atendido")) {
+                    db.collection("incidencias").document(itemSelected.getId()).update("estado", "Atendido")
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(InfraIncidenciaSeleccionada.this, "Se ha marcado como atendido", Toast.LENGTH_SHORT).show();
+                                    itemSelected.setEstado("Atendido");
+                                    botonMarcarResuelto.setText("Marcar como no resuelto");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(InfraIncidenciaSeleccionada.this, "Ocurrio un error, no se marco.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }else{
+                    db.collection("incidencias").document(itemSelected.getId()).update("estado", "Por Atender")
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(InfraIncidenciaSeleccionada.this, "Se ha marcado como no atendido", Toast.LENGTH_SHORT).show();
+                                    itemSelected.setEstado("Por atender");
+                                    botonMarcarResuelto.setText("Marcar como resuelto");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(InfraIncidenciaSeleccionada.this, "Ocurrio un error.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
     }
