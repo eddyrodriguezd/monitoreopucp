@@ -5,10 +5,10 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" /> <!-- Acceso a la geolocalizacion -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,11 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReportesActivity"/>
+        <activity android:name=".InfraIncidenciaSeleccionada"></activity>
+        <activity android:name=".ReportesActivity" />
         <activity android:name=".RecuperarCuenta" />
-        <activity
-            android:name=".RegisterUser" >
-        </activity>
+        <activity android:name=".RegisterUser"></activity>
         <activity android:name=".IncidenciaFormulario" />
         <activity
             android:name=".IncidenciaSeleccionada"
@@ -50,11 +49,12 @@
             -->
         </activity>
         <activity android:name=".UserIncidenciasHistoryActivity" />
-        <activity android:name=".IncidenciasListActivity"/>
+        <activity android:name=".IncidenciasListActivity" />
         <activity
             android:name=".AgregarAnotacionActivity"
             android:label="@string/nueva_anotacion_title" />
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

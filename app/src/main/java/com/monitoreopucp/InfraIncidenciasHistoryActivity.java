@@ -31,8 +31,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firestore.v1.StructuredQuery;
 import com.google.gson.Gson;
 import com.monitoreopucp.entities.Incidencia;
+import com.monitoreopucp.entities.Usuario;
 import com.monitoreopucp.utilities.DtoIncidencias;
 import com.monitoreopucp.utilities.FirebaseCallback;
+import com.monitoreopucp.utilities.adapters.IncidenciasAdapter;
 import com.monitoreopucp.utilities.adapters.InfraIncidenciasHistoryAdapter;
 import com.monitoreopucp.utilities.adapters.UserIncidenciasHistoryAdapter;
 
@@ -59,7 +61,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
     private FirebaseStorage fStorage;
     private List<Incidencia> listaIncidencias;
     private RecyclerView recyclerView;
-
+    private Usuario currentUser;
     private LatLng location;
     private Date fromDate, toDate;
     private String keywords;
@@ -69,7 +71,8 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infra_incidencias_history);
-
+        Intent intent1 = getIntent();
+        currentUser = (Usuario) intent1.getSerializableExtra("currentUser");
         listaIncidencias = new ArrayList<>();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance();
@@ -90,6 +93,9 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                 startActivityForResult(intent, FILTER_REQUEST_CODE);
             }
         });
+
+
+
     }
 
     /*private void getAllIncidenciasHistory() {
@@ -210,10 +216,26 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         getIncidenciasHistory(new FirebaseCallback() {
             @Override
             public void onSuccess() {
-                InfraIncidenciasHistoryAdapter listaIncidenciasAdapter = new InfraIncidenciasHistoryAdapter(listaIncidencias,
+                InfraIncidenciasHistoryAdapter InfraIncidenciasHistoryAdapter = new InfraIncidenciasHistoryAdapter(listaIncidencias,
                         InfraIncidenciasHistoryActivity.this, fStorage.getReference());
-                recyclerView.setAdapter(listaIncidenciasAdapter);
+                recyclerView.setAdapter(InfraIncidenciasHistoryAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(InfraIncidenciasHistoryActivity.this));
+                InfraIncidenciasHistoryAdapter.setOnItemClickListener(new InfraIncidenciasHistoryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+
+                        Incidencia selectedIncidencia = listaIncidencias.get(position);
+
+                        Intent intent;
+                        intent = new Intent(InfraIncidenciasHistoryActivity.this, InfraIncidenciaSeleccionada.class);
+                        intent.putExtra("item", selectedIncidencia);
+                        intent.putExtra("caso", 2);
+
+                        int requestCode_IncidenciaSeleccionada = 1;
+                        startActivityForResult(intent, requestCode_IncidenciaSeleccionada);
+
+                    }
+                });
             }
         });
     }
@@ -268,7 +290,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Incidencia incidencia = document.toObject(Incidencia.class);
                             incidencia.setUbicacion((GeoPoint) Objects.requireNonNull(document.get("ubicacion")));
-
+                            incidencia.setId(document.getId());
                             //Filtro por palabras clave
                             if(keywords != null){
                                 if(!incidencia.getDescripcion().toLowerCase().contains(keywords.toLowerCase()))

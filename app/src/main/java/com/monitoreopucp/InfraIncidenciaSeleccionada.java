@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,9 +31,9 @@ import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.utilities.adapters.AnotacionAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class IncidenciaSeleccionada extends AppCompatActivity {
+public class InfraIncidenciaSeleccionada extends AppCompatActivity {
+
 
     private TextView mTextView_Titulo;
     private TextView mTextView_Cuerpo;
@@ -52,11 +51,6 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_incidencia_seleccionada, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -65,7 +59,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
             case R.id.itemMenu_AgregarAnotacion:
 
                 Intent intent;
-                intent = new Intent(IncidenciaSeleccionada.this, AgregarAnotacionActivity.class);
+                intent = new Intent(InfraIncidenciaSeleccionada.this, AgregarAnotacionActivity.class);
                 intent.putExtra("titulo incidencia", itemSelected.getTitulo());
                 intent.putExtra("incidencia", itemSelected);
                 intent.putExtra("userUID", userUID);
@@ -84,37 +78,24 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        loadAnotaciones();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incidencia_seleccionada);
+        setContentView(R.layout.activity_infra_incidencia_seleccionada);
 
         anonymousLogin();
-        bootActionBar();
         receiveItem();
         fillFields();
         loadAnotaciones();
-    }
-
-    public void bootActionBar() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+        findViewById(R.id.ButtonBack_InfraIncidencia).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void handleOnBackPressed() {
-                Intent intent = new Intent();
-                setResult(RESULT_OK,intent);
-                finish();
+            public void onClick(View v) {
+                onBackPressed();
             }
-        };
+        });
     }
 
-    public void receiveItem() {
+
+    public void receiveItem() { //todo enviar estos
         Intent intent = getIntent();
         itemSelected = (Incidencia) intent.getSerializableExtra("item");
         userUID = intent.getStringExtra("userUID");
@@ -136,9 +117,9 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
 
     public void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyclerViewAnotaciones_IncidenciaSeleccionada);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(IncidenciaSeleccionada.this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(InfraIncidenciaSeleccionada.this));
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new AnotacionAdapter(mAnotaciones, IncidenciaSeleccionada.this);
+        mAdapter = new AnotacionAdapter(mAnotaciones, InfraIncidenciaSeleccionada.this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -158,7 +139,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(IncidenciaSeleccionada.this).load(uri).into(mImageView);
+                Glide.with(InfraIncidenciaSeleccionada.this).load(uri).into(mImageView);
             }
         });
     }
@@ -180,7 +161,6 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
     //Listener
     public void setAnotaciones(QuerySnapshot result) {
         Anotacion aux;
-        anotaciones.clear();
         for(QueryDocumentSnapshot documentSnapshot : result){
             aux = documentSnapshot.toObject(Anotacion.class);
             if (documentSnapshot != null){

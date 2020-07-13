@@ -41,6 +41,16 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
     private List<Incidencia> listaIncidencias;
     private Context context;
     private StorageReference storageReference;
+    private OnItemClickListener mListener;
+
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
 
     public InfraIncidenciasHistoryAdapter(List<Incidencia> listaIncidencias, Context c, StorageReference storageReference){
         this.listaIncidencias = listaIncidencias;
@@ -60,7 +70,7 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
         private TextView textViewSingleInfraIncidencia_Anotaciones;
         private ImageView imageViewInfraIncidencia;
 
-        public InfraIncidenciaHistoryViewHolder(@NonNull View itemView) {
+        public InfraIncidenciaHistoryViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             singleInfraIncidencia_ConstraintLayout = itemView.findViewById(R.id.singleInfraIncidencia_ConstraintLayout);
             textViewSingleInfraIncidencia_TitleValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_TitleValue);
@@ -72,6 +82,21 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
             textViewSingleInfraIncidencia_AnotacionesValue = itemView.findViewById(R.id.textViewSingleInfraIncidencia_AnotacionesValue);
             textViewSingleInfraIncidencia_Anotaciones = itemView.findViewById(R.id.textViewSingleInfraIncidencia_Anotaciones);
             imageViewInfraIncidencia = itemView.findViewById(R.id.imageViewInfraIncidencia);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+
+
         }
     }
 
@@ -79,7 +104,7 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
     @Override
     public InfraIncidenciaHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.single_incidencia_infra_history, parent, false);
-        return new InfraIncidenciasHistoryAdapter.InfraIncidenciaHistoryViewHolder(itemView);
+        return new InfraIncidenciasHistoryAdapter.InfraIncidenciaHistoryViewHolder(itemView,mListener);
     }
 
     @SuppressLint("SetTextI18n")

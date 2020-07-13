@@ -47,6 +47,6 @@
     <string name="Nueva_Anotacion_Incidencia">Incidencia: \n</string>
     <string name="IncidenciasCercanasInfo1">A continuación verás una lista de incidencias cercanas a ti</string>
     <string name="IncidenciasCercanasInfo2">Verifica si la incidencia que deseas agregar se encuentra en la lista, en cuyo caso, ya no será necesario agregarla, pero puedes añadir información adicional.</string>
-
+    <string name="InfraIncidenciaSeleccionadaMarcarResuelto"> Marcar como resuelto</string>
 
 </resources>
