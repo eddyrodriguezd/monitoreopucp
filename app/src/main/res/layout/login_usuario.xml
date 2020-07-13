@@ -42,7 +42,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"/>
+            android:inputType="textEmailAddress"
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -53,9 +54,10 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/button_rounded"
+        android:clickable="false"
         android:hint="Contraseña"
         android:textColorHint="#FFFFFF"
-        android:background="@drawable/button_rounded"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,8 +69,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:inputType="textPassword" />
+            android:enabled="true"
+            android:inputType="textPassword"
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
@@ -76,7 +79,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:clickable="false"
+        android:editable="false"
         android:ems="10"
+        android:enabled="false"
         android:inputType="textPersonName"
         android:text="¿Olvidaste tu contraseña?"
         android:textAlignment="center"
@@ -91,7 +97,9 @@
         android:id="@+id/editText13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:clickable="false"
         android:ems="10"
+        android:enabled="false"
         android:inputType="textPersonName"
         android:text="¿Aún no tienes tu cuenta?    "
         android:textAlignment="textEnd"
