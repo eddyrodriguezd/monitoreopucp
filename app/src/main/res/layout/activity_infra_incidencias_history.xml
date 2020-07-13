@@ -26,25 +26,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-
-        android:background="@drawable/boton_rounded_border2"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBack_InfraHistory"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/button_FilterHistory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewInfraIncidenciasHistory" />
-
-    <Button
-        android:id="@+id/buttonBack_InfraHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/ButtonBack"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_FilterHistory"
@@ -53,9 +40,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/ButtonFilter"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonBack_InfraHistory"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonBack_InfraHistory" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

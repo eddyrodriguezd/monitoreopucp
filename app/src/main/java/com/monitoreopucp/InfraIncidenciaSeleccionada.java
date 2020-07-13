@@ -92,10 +92,18 @@ public class InfraIncidenciaSeleccionada extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        findViewById(R.id.buttonMarcarResuelto).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                //todo hacer que se marque como resuelto
+            }
+        });
     }
 
 
-    public void receiveItem() { //todo enviar estos
+    public void receiveItem() {
         Intent intent = getIntent();
         itemSelected = (Incidencia) intent.getSerializableExtra("item");
         userUID = intent.getStringExtra("userUID");

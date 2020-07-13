@@ -127,10 +127,8 @@ public class InfraIncidenciasHistoryAdapter extends RecyclerView.Adapter<InfraIn
         if( initialDateTime.equals(fechaRegistro) ||
                 (initialDateTime.before(fechaRegistro) && endDateTime.after(fechaRegistro)) ){
             Log.d("InfoFecha", "ENTRÓ Titulo:" + incidencia.getTitulo());
-            holder.singleInfraIncidencia_ConstraintLayout.setBackgroundColor(0xFFF6E684);
         }
         else{
-            holder.singleInfraIncidencia_ConstraintLayout.setBackgroundColor(0xFFFFFFFF);
         }
 
         holder.textViewSingleInfraIncidencia_StatusValue.setText(incidencia.getEstado());

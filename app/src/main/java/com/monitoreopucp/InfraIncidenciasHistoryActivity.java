@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -61,30 +65,42 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
     private FirebaseStorage fStorage;
     private List<Incidencia> listaIncidencias;
     private RecyclerView recyclerView;
-    private Usuario currentUser;
     private LatLng location;
     private Date fromDate, toDate;
     private String keywords;
     private int status=2; //Por defecto se muestran "atendidos" y "por atender" (ambos)
+    private FirebaseAuth mAuth;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_infra_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.menuItem_InfraMain){
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
+            Intent intent2 = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent2);
+            finish();
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infra_incidencias_history);
-        Intent intent1 = getIntent();
-        currentUser = (Usuario) intent1.getSerializableExtra("currentUser");
         listaIncidencias = new ArrayList<>();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.recyclerView_InfraHistory);
         refreshView();
 
-        findViewById(R.id.buttonBack_InfraHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         findViewById(R.id.button_FilterHistory).setOnClickListener(new View.OnClickListener() {
             @Override

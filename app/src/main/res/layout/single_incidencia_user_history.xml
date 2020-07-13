@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/background2">
+    android:background="@android:color/transparent">
 
     <TextView
         android:textColor="@color/white"

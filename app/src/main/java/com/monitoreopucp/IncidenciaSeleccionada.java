@@ -58,6 +58,19 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         return true;
     }
 
+    public void bootActionBar() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent();
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        };
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -101,18 +114,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         loadAnotaciones();
     }
 
-    public void bootActionBar() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Intent intent = new Intent();
-                setResult(RESULT_OK,intent);
-                finish();
-            }
-        };
-    }
 
     public void receiveItem() {
         Intent intent = getIntent();

@@ -3,6 +3,8 @@ package com.monitoreopucp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -58,6 +61,7 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
 
     private FirebaseFirestore fStore;
     private FirebaseStorage fStorage;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +118,28 @@ public class UserIncidenciasReportadasActivity extends AppCompatActivity {
 
     }
 
-    public void refreshView(final String userId){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_infra_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.menuItem_InfraMain) {
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
+            Intent intent2 = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent2);
+            finish();
+        }
+        return true;
+    }
+
+
+
+        public void refreshView(final String userId){
         getUserIncidenciasSinResolver(userId, new FirebaseCallback() {
             @Override
             public void onSuccess() {
