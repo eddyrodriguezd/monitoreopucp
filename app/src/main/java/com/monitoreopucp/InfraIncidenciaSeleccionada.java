@@ -105,7 +105,7 @@ public class InfraIncidenciaSeleccionada extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //todo hacer que se marque como resuelto
+
                 if(!itemSelected.getEstado().equalsIgnoreCase("Atendido")) {
                     db.collection("incidencias").document(itemSelected.getId()).update("estado", "Atendido")
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
