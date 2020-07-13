@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background1"
     tools:context=".LoginActivity">
 
 
@@ -28,7 +29,11 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Correo"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#100F0F"
+        android:textColorLink="#FFFFFF"
+        android:background="@drawable/otro_boton_round_border3"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -41,6 +46,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nueva Contraseña"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
@@ -52,6 +58,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Correo"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="@+id/editText"
         app:layout_constraintHorizontal_bias="0.0"
@@ -63,6 +70,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#100F0F"
+        android:textColorLink="#FFFFFF"
+        android:background="@drawable/otro_boton_round_border3"
         app:layout_constraintEnd_toEndOf="@+id/editTextFilterKeywords"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextFilterKeywords"
@@ -75,6 +87,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginBottom="144dp"
         android:text="Solicitar"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -84,6 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="144dp"
         android:text="Regresar"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
@@ -97,6 +111,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Repetir Contraseña"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="@+id/editText7"
         app:layout_constraintStart_toStartOf="@+id/editText7"
         app:layout_constraintTop_toBottomOf="@+id/editText5" />
@@ -107,6 +122,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#100F0F"
+        android:textColorLink="#FFFFFF"
+        android:background="@drawable/otro_boton_round_border3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText6" />

@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background2">
 
     <TextView
         android:id="@+id/textView8"
@@ -41,6 +42,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Problema en el pabellón Z"
+        android:background="@drawable/boton_rounded_border2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText14" />
@@ -52,6 +54,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Pista rota frente a EEGGCC"
+        android:background="@drawable/boton_rounded_border2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText20" />
@@ -86,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="136dp"
         android:text="Ver Histórico"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

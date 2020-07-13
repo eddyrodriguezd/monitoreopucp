@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     tools:context=".MapFilterActivity"
     tools:ignore="ContentDescription">
 
@@ -28,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ButtonBack"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonConfirmLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
@@ -40,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:text="@string/ButtonAccept"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"

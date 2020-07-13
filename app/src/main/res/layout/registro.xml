@@ -14,6 +14,7 @@
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="72dp"
         android:text="CANCELAR"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -112,6 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:text="REGISTRARSE"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button8"
         app:layout_constraintHorizontal_bias="0.413"

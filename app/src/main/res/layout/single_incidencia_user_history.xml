@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/gray">
+    android:background="@drawable/background2">
 
     <TextView
         android:textColor="@color/white"
@@ -101,6 +101,7 @@
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/otro_boton_round_border3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

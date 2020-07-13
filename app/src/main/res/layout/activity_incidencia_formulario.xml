@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     tools:context=".IncidenciaFormulario">
 
     <ScrollView
@@ -24,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Titulo"
+                android:backgroundTint="@color/colorPrimary"
                 android:textSize="22sp" />
 
             <ScrollView
@@ -40,6 +42,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Contenido"
+                        android:backgroundTint="@color/colorPrimary"
                         android:textSize="18sp" />
                 </LinearLayout>
             </ScrollView>
@@ -88,14 +91,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ingresar ubicación por el mapa"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:cornerRadius="12dp" />
 
             <Button
                 android:id="@+id/buttonAceptar_FormularioIncidencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Aceptar"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
     </ScrollView>
