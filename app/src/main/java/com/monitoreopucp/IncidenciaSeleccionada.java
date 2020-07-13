@@ -107,7 +107,6 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incidencia_seleccionada);
 
-        anonymousLogin();
         bootActionBar();
         receiveItem();
         fillFields();
@@ -164,20 +163,7 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
             }
         });
     }
-    //LOGIN
-    private void anonymousLogin(){
-        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // do your stuff, kha?
-            }
-        })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                    }
-                });
-    }
+
 
     //Listener
     public void setAnotaciones(QuerySnapshot result) {

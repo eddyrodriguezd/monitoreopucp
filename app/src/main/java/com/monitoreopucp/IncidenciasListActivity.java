@@ -123,7 +123,6 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         }
 
         bootActionBar();
-        //anonymousLogin();
         readIncidenciasDB();
 
     }
@@ -280,20 +279,7 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         collectionImages.add(bitmap);
     }
 
-    //LOGIN
-    private void anonymousLogin(){
-        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // do your stuff
-            }
-        })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                    }
-                });
-    }
+
 
     //LISTENER
 
