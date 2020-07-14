@@ -47,6 +47,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -232,6 +234,15 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
         getIncidenciasHistory(new FirebaseCallback() {
             @Override
             public void onSuccess() {
+
+                //Ordenar por estado
+                Collections.sort(listaIncidencias, new Comparator<Incidencia>() {
+                    public int compare(Incidencia i1, Incidencia i2) {
+                        return i1.getEstado().compareTo(i2.getEstado());
+                    }
+                }/*.reversed()*/);
+
+                //Build Recycler View
                 InfraIncidenciasHistoryAdapter InfraIncidenciasHistoryAdapter = new InfraIncidenciasHistoryAdapter(listaIncidencias,
                         InfraIncidenciasHistoryActivity.this, fStorage.getReference());
                 recyclerView.setAdapter(InfraIncidenciasHistoryAdapter);
@@ -266,14 +277,14 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                 switch (status){
                     case 0: //Solo "por atender"
                         querySnapshot = collection.whereEqualTo("estado", "Por atender")
-                                .orderBy("estado").get();
+                                /*.orderBy("estado")*/.get();
                         break;
                     case 1: //Solo "atendidos"
                         querySnapshot = collection.whereEqualTo("estado", "Atendido")
-                                .orderBy("estado").get();
+                                /*.orderBy("estado")*/.get();
                         break;
                     case 2: //Ambos
-                        querySnapshot = collection.orderBy("estado").get();
+                        querySnapshot = collection/*.orderBy("estado")*/.get();
                         break;
                 }
             }
@@ -283,17 +294,17 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                     case 0: //Solo "por atender"
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
                                 .whereLessThanOrEqualTo("fechaRegistro", toDate)
-                                .whereEqualTo("estado", "Por atender").orderBy("estado").get();
+                                .whereEqualTo("estado", "Por atender")/*.orderBy("estado")*/.get();
                         break;
                     case 1: //Solo "atendidos"
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
                                 .whereLessThanOrEqualTo("fechaRegistro", toDate)
-                                .whereEqualTo("estado", "Atendido").orderBy("estado").get();
+                                .whereEqualTo("estado", "Atendido")/*.orderBy("estado")*/.get();
                         break;
                     case 2: //Ambos
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
                                 .whereLessThanOrEqualTo("fechaRegistro", toDate)
-                                .orderBy("estado").get();
+                                /*.orderBy("estado")*/.get();
                         break;
                 }
             }
