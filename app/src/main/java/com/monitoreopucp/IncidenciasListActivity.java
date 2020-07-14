@@ -80,6 +80,8 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
     private ArrayList<Bitmap> collectionImages = new ArrayList<Bitmap>();
     private Bitmap[] mImages;
     private Bitmap currentImage;
+    private final static int requestCode_CrearIncidencia = 1;
+    private final static int requestCode_IncidenciaSeleccionada = 2;
 
 
     @Override
@@ -98,7 +100,6 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 intent2 = new Intent(IncidenciasListActivity.this, IncidenciaFormulario.class);
                 intent2.putExtra("currentUser", currentUser);
                 intent2.putExtra("caso", 1);
-                int requestCode_CrearIncidencia = 1;
                 startActivityForResult(intent2, requestCode_CrearIncidencia);
                 return true;
             default:
@@ -108,6 +109,29 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            Intent intent = new Intent();
+            switch(requestCode){
+                case requestCode_CrearIncidencia:
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    break;
+                case requestCode_IncidenciaSeleccionada:
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    break;
+                default:
+                    break;
+
+            }
+
+
+        }
     }
 
     @Override
@@ -164,7 +188,6 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
                 intent.putExtra("item", selectedIncidencia);
                 intent.putExtra("caso", 2);
 
-                int requestCode_IncidenciaSeleccionada = 1;
                 startActivityForResult(intent, requestCode_IncidenciaSeleccionada);
 
             }

@@ -100,7 +100,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         Intent intent2 = new Intent();
-        setResult(RESULT_OK,intent2);
+        setResult(RESULT_CANCELED,intent2);
         finish();
         return true;
     }
@@ -130,7 +130,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 Intent intent = new Intent();
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_CANCELED,intent);
                 finish();
             }
         };
@@ -348,7 +348,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                Toast.makeText(IncidenciaFormulario.this,"Fail",Toast.LENGTH_LONG).show();
+                Toast.makeText(IncidenciaFormulario.this,"No se logro guardar la incidencia",Toast.LENGTH_LONG).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -360,10 +360,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(IncidenciaFormulario.this,"Success",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent();
-                                setResult(RESULT_OK,intent);
-                                finish();
+                                Toast.makeText(IncidenciaFormulario.this,"Se guardo correctamente",Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -383,6 +380,9 @@ public class IncidenciaFormulario extends AppCompatActivity {
         //incidencia.put("idFoto", idFoto);
         incidencia.put("titulo",mTextView_Titulo.getText().toString());
         incidencia.put("usuario", infoUsuario);
+        Intent intent = new Intent();
+        setResult(RESULT_OK,intent);
+        finish();
 
         if (CASE == 1){
             Date currentTime = Calendar.getInstance().getTime();
