@@ -221,12 +221,18 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
 
                     //Status
                     status = data.getIntExtra("status", -1);
+                    Log.i("Fechas al volver","FromDate: "+fromDate);
+                    Log.i("Fechas al volver","ToDate: "+toDate);
 
                     refreshView();
                 }
 
             }
 
+        }
+        else {
+            status = 2;
+            refreshView();
         }
     }
 
@@ -258,7 +264,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                         intent.putExtra("item", selectedIncidencia);
                         intent.putExtra("caso", 2);
 
-                        int requestCode_IncidenciaSeleccionada = 1;
+                        int requestCode_IncidenciaSeleccionada = 3;
                         startActivityForResult(intent, requestCode_IncidenciaSeleccionada);
 
                     }
@@ -272,6 +278,7 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
             listaIncidencias.clear();
             CollectionReference collection = fStore.collection("incidencias");
             Task<QuerySnapshot> querySnapshot = null;
+
 
             if(fromDate == null){ //No considerar fecha
                 switch (status){

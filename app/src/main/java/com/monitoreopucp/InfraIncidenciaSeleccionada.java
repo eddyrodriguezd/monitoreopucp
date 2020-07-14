@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.entities.Anotacion;
@@ -33,6 +34,9 @@ import com.monitoreopucp.entities.Incidencia;
 import com.monitoreopucp.utilities.adapters.AnotacionAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InfraIncidenciaSeleccionada extends AppCompatActivity {
 
@@ -113,6 +117,17 @@ public class InfraIncidenciaSeleccionada extends AppCompatActivity {
                                     Toast.makeText(InfraIncidenciaSeleccionada.this, "Se ha marcado como atendido", Toast.LENGTH_SHORT).show();
                                     itemSelected.setEstado("Atendido");
                                     botonMarcarResuelto.setText("Marcar como no resuelto");
+                                    Map<String,Object> aux = new HashMap<String, Object>();
+                                    aux.put("fechaRevision", Calendar.getInstance().getTime());
+
+                                    db.collection("incidencias").document(itemSelected.getId())
+                                            .set(aux, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            setResult(RESULT_OK,new Intent());
+                                            finish();
+                                        }
+                                    });
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -129,6 +144,8 @@ public class InfraIncidenciaSeleccionada extends AppCompatActivity {
                                     Toast.makeText(InfraIncidenciaSeleccionada.this, "Se ha marcado como no atendido", Toast.LENGTH_SHORT).show();
                                     itemSelected.setEstado("Por atender");
                                     botonMarcarResuelto.setText("Marcar como resuelto");
+                                    setResult(RESULT_OK,new Intent());
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
