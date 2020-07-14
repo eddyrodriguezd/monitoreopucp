@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.monitoreopucp.entities.Anotacion;
@@ -43,7 +45,6 @@ public class AgregarAnotacionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_anotacion);
         incidencia = (Incidencia) getIntent().getSerializableExtra("incidencia");
         UID = (String) getIntent().getSerializableExtra("userUID");
-
         mTextView_TituloIncidencia = findViewById(R.id.textViewTituloincidencia_AgregarAnotacion);
         mEditText_Anotacion = findViewById(R.id.inputNuevaAnotacion);
         mButton_Aceptar = findViewById(R.id.buttonAceptar_NuevaAnotacion);

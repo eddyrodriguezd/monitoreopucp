@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -154,8 +155,12 @@ public class IncidenciasListActivity extends AppCompatActivity implements DataLi
 
                 Incidencia selectedIncidencia = mLista[position];
 
+                Log.i("Debug", "IncidenciasListActivity, crear nueva incidencia");
+                Log.i("Debug", "ID del usuario "+currentUser.getId());
                 Intent intent;
                 intent = new Intent(IncidenciasListActivity.this, IncidenciaSeleccionada.class);
+                intent.putExtra("currentUser", currentUser);
+                intent.putExtra("userUID", currentUser.getId());
                 intent.putExtra("item", selectedIncidencia);
                 intent.putExtra("caso", 2);
 

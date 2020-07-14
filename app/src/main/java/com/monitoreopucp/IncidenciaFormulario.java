@@ -16,6 +16,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -163,6 +164,8 @@ public class IncidenciaFormulario extends AppCompatActivity {
             currentUser = (Usuario) intent.getSerializableExtra("currentUser");
             fillFields(mItem);
         }
+        Log.i("Debug","Incidencia Formulario ID "+ currentUser.getId());
+        Log.i("Debug", "caso " + CASE);
 
         this.setTitle(tituloActv);
 
