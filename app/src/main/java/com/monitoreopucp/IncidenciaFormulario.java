@@ -231,10 +231,12 @@ public class IncidenciaFormulario extends AppCompatActivity {
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     mImageView.setImageBitmap(imageBitmap);
+                    break;
                 case GALLERY_REQUEST_CODE:
                     imageObtained = true;
                     Uri selectedImage = data.getData();
                     mImageView.setImageURI(selectedImage);
+                    break;
                 case MAP_FILTER_REQUEST_CODE:
                     if (data != null) {
                         double latitude = data.getDoubleExtra("latitude", 0);
@@ -243,6 +245,9 @@ public class IncidenciaFormulario extends AppCompatActivity {
                         locationFromMap = true;
                         locationObtained = true;
                     }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -306,7 +311,7 @@ public class IncidenciaFormulario extends AppCompatActivity {
 
         fieldsComplete = (!mTextview_Cuerpo.getText().toString().isEmpty())&&(!mTextView_Titulo.getText().toString().isEmpty());
 
-        if (fieldsComplete){
+        if (!fieldsComplete){
             Toast.makeText(this, "Llene todos los campos",Toast.LENGTH_LONG).show();
         }
         else {
