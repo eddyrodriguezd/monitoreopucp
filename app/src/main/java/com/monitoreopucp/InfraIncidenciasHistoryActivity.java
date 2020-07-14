@@ -265,16 +265,15 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
             if(fromDate == null){ //No considerar fecha
                 switch (status){
                     case 0: //Solo "por atender"
-                        querySnapshot = collection.whereEqualTo("estado", "Por atender").get();
-                        Log.d("infoApp", "Filtro: Solo por atender");
+                        querySnapshot = collection.whereEqualTo("estado", "Por atender")
+                                .orderBy("estado").get();
                         break;
                     case 1: //Solo "atendidos"
-                        querySnapshot = collection.whereEqualTo("estado", "Atendido").get();
-                        Log.d("infoApp", "Filtro: Solo atendidos");
+                        querySnapshot = collection.whereEqualTo("estado", "Atendido")
+                                .orderBy("estado").get();
                         break;
                     case 2: //Ambos
-                        querySnapshot = collection.get();
-                        Log.d("infoApp", "SIN Filtro");
+                        querySnapshot = collection.orderBy("estado").get();
                         break;
                 }
             }
@@ -284,17 +283,17 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                     case 0: //Solo "por atender"
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
                                 .whereLessThanOrEqualTo("fechaRegistro", toDate)
-                                .whereEqualTo("estado", "Por atender").get();
+                                .whereEqualTo("estado", "Por atender").orderBy("estado").get();
                         break;
                     case 1: //Solo "atendidos"
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
                                 .whereLessThanOrEqualTo("fechaRegistro", toDate)
-                                .whereEqualTo("estado", "Atendido").get();
+                                .whereEqualTo("estado", "Atendido").orderBy("estado").get();
                         break;
                     case 2: //Ambos
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
                                 .whereLessThanOrEqualTo("fechaRegistro", toDate)
-                                .get();
+                                .orderBy("estado").get();
                         break;
                 }
             }
