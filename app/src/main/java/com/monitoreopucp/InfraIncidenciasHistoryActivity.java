@@ -226,6 +226,9 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
             }
 
         }
+        else {
+            refreshView();
+        }
     }
 
     public void refreshView(){
@@ -297,6 +300,8 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                         break;
                 }
             }
+
+            Log.i("Query",querySnapshot.toString());
 
             querySnapshot.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
