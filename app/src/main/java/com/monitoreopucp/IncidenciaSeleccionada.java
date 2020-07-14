@@ -132,7 +132,6 @@ public class IncidenciaSeleccionada extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public void buildRecyclerView() {

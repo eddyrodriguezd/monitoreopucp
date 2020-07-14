@@ -84,10 +84,12 @@ public class FilterActivity extends AppCompatActivity {
                 datePicker.show();
             }
         });
+        //Botón para colocar la fecha de hoy
         findViewById(R.id.buttonToToday).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                textViewFilterDateTo.setText(new SimpleDateFormat("EEEE dd-MM-yyyy", new Locale("es", "PE"))
+                        .format(Calendar.getInstance().getTime()));
             }
         });
 
