@@ -211,6 +211,11 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
                     if(toDateString!= null){
                         try {
                             toDate = format.parse(toDateString);
+                            //+1
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(toDate);
+                            c.add(Calendar.DATE, 1);
+                            toDate = c.getTime();
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -300,17 +305,17 @@ public class InfraIncidenciasHistoryActivity extends AppCompatActivity {
 
                     case 0: //Solo "por atender"
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
-                                .whereLessThanOrEqualTo("fechaRegistro", toDate)
+                                .whereLessThan("fechaRegistro", toDate)
                                 .whereEqualTo("estado", "Por atender")/*.orderBy("estado")*/.get();
                         break;
                     case 1: //Solo "atendidos"
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
-                                .whereLessThanOrEqualTo("fechaRegistro", toDate)
+                                .whereLessThan("fechaRegistro", toDate)
                                 .whereEqualTo("estado", "Atendido")/*.orderBy("estado")*/.get();
                         break;
                     case 2: //Ambos
                         querySnapshot = collection.whereGreaterThanOrEqualTo("fechaRegistro", fromDate)
-                                .whereLessThanOrEqualTo("fechaRegistro", toDate)
+                                .whereLessThan("fechaRegistro", toDate)
                                 /*.orderBy("estado")*/.get();
                         break;
                 }
