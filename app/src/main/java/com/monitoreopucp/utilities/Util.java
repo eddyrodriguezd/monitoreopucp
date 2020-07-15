@@ -16,7 +16,7 @@ import io.opencensus.internal.StringUtils;
 
 public class Util {
 
-    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.5; //500m
+    public static final double DISTANCIA_MAXIMA_PARA_FILTROS = 0.1; //Distancia en Km [SIU]
 
     public static boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
